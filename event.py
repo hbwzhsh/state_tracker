@@ -56,13 +56,13 @@ class Event():
         return e
 
     @staticmethod
-    def sample_dict():
+    def sample_dict(n = 0):
         return {
             "id":"123",
             "slots":{
             "area":"north"
             },
-            "text":"I want restaurant that in north of the town",
+            "text":"This is the {}th event".format(n),
             "type":"user",
             "time": time.time()
 

@@ -21,6 +21,7 @@ class Tracker():
             event.set_slotset(slots)
         # replace by other format-converter
         self.add_event(event)
+        return event
 
     def add_bot_event(self, r):
         event = Event('bot', r)

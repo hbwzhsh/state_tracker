@@ -3,9 +3,14 @@ from action import Action
 from slot_filling_model import SlotModel,HelperNER
 from state_tracker import Tracker
 from task_action import Task,Navigate
+from event import Event
 from entity import Entity
+
+from Datebase import DatabaseManger
+from TrackerManager import TrackerManager
+
 class Agent():
-    def __init__(self,manager):
+    def __init__(self,manager = None ,db_manager = None):
         """
         init and load model here，rasa model for slot filling ,keras basic dense multi label classifcatioin for multi-action
         """
@@ -14,13 +19,17 @@ class Agent():
         self.slot_model.load(camb_rest_slot_path)
         self.action_model = RnnBinaryModel()
         self.action_model.load_models()
+        self.db_manager  = db_manager
         #self.action_model.load_model(self.action_model.model_path)
         self.trackers = manager
 
     def process(self,q):
         parsing_result = self.slot_model.predict(q)
         current_tracker = self.trackers.add_or_get_tracker('test_bot')
-        current_tracker.add_user_event(q, parsing_result)
+        user_event = current_tracker.add_user_event(q, parsing_result)
+        if self.db_manager:
+            self.db_manager.insert_event_mongo(user_event.event2dict('test_bot'))
+
         slu = self.slot_model.rasa2slu(parsing_result)
         previous_slots = current_tracker.slotset
         current_slots = current_tracker.rasa_to_slots(parsing_result)
@@ -56,3 +65,14 @@ class Agent():
             action = Action(action_name,{})
             result = action.get_filled_response(current_tracker.slotset)
         return result+'({})'.format(action_name)
+
+# test
+manager = TrackerManager()
+db_manager = DatabaseManger()
+agent = Agent(manager,db_manager)
+
+r = 1
+
+agent.process('I want chinese food')
+agent.process('Can I have the address?')
+agent.process('address?')

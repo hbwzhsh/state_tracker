@@ -31,6 +31,15 @@ import os
 
 class ClassModel():
     # keras
+    @staticmethod
+    def get_freq_word(self,top_n):
+        import nltk
+        from nltk.corpus import brown
+
+        news_text = brown.words()
+        fdist = nltk.FreqDist([w.lower() for w in news_text])
+        freq = fdist.most_common(top_n)
+        return [word for word,frq in freq]
 
     def set_verbose(self, verbose):
         self.verbose = verbose
@@ -266,14 +275,14 @@ class ActionModel(ClassModel):
                 embedding_matrix[i] = embedding_vector
         return embedding_matrix
 
-    def get_full_word2index(self):
+    def get_full_word2index(self,top_n=None):
         embedding_index = self.get_glove_dict()
-        vocab_size = len(embedding_index)
-        words = embedding_index.keys()
-        words = list(words)
-        ids = list(range(2,vocab_size+2))
-
-        #word_index = {k:v for k,v in zip(words,ids)}
+        if top_n:
+            words = self.get_freq_word(top_n)
+        else:
+            words = embedding_index.keys()
+            words = list(words)
+        vocab_size = len(words)
         word_index = { word:word_id+2  for word_id,word in enumerate(words)}
         word_index["PAD"] = 0
         word_index["UNK"] = 1
@@ -882,10 +891,10 @@ class Glove(DuelRnnCamRest):
         self.is_binary_model = True
         self.max_vocab_size = 1200
         self.model = None
-        self.hidden_size = 250
+        self.hidden_size = 100
         self.turn_number = 3
         self.turn_num = 3
-        self.MAX_SENTENCE_LENGTH = 30
+        self.MAX_SENTENCE_LENGTH = 25
         self.vocab_size, self.embedding_size = 1000, 100
         self.input_shape = (9,)
         self.batch_size = 100
@@ -1876,10 +1885,13 @@ class HybridDuelRnnModel(DuelRnnCamRest):
 # binary = BinaryModel()
 # binary.load_data_and_train()
 
-g = Glove()
-g.load_data_and_train()
+# g = Glove()
+# g.load_data_and_train()
 
 #g.load_models()
-#g.word2index = g.get_full_word2index()[0]
-#r = g.get_next_action_from_utters(['Are there a restaurant that serves chinese food?'])
-#print(r)
+# g.word2index = g.get_full_word2index()[0]
+# r = g.get_next_action_from_utters(['Are there a restaurant that serves chinese food?'])
+# print(r)
+#
+# us = ['find me a  cafe in the south of the town']
+# g.get_next_action_from_utters(us)

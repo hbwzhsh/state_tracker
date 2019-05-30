@@ -11,7 +11,7 @@ app = Sanic()
 CORS(app)
 manager = TrackerManager()
 db_manager = DatabaseManger()
-agent = Agent(manager)
+agent = Agent(manager,db_manager)
 
 @app.route("/test",methods=['GET','POST','OPTIONS'])
 async def test(request):
