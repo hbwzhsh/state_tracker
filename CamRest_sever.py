@@ -5,10 +5,15 @@ from TrackerManager import TrackerManager
 from slot_tool import SlotTool
 from event import Event
 from Datebase import DatabaseManger
+from Agent import Agent
+from sanic_cors import CORS
 app = Sanic()
+CORS(app)
 manager = TrackerManager()
 db_manager = DatabaseManger()
-@app.route("/")
+agent = Agent(manager)
+
+@app.route("/test",methods=['GET','POST','OPTIONS'])
 async def test(request):
     return json({"hello": "world"})
 
@@ -34,15 +39,30 @@ async def add_event(request):
     else:
         slotset = []
     event = Event(type,text,slotset=slotset)
-    current_tracker = manager.add_or_get_tracker(tracker_id)
+    current_tracker = []#manager.add_or_get_tracker(tracker_id)
     current_tracker.add_event(event)
-    db_manager.insert_event_mongo(event.event2dict())
+    #db_manager.insert_event_mongo(event.event2dict())
 
     events = [event.event2dict(tracker_id) for event in current_tracker.events]
     response = dict()
     response['id'] = tracker_id
     response['events'] = events
     return json(response)
+
+@app.route("/user/send",methods=['GET','POST','OPTIONS'])
+async def user_query(request):
+    print(request.args)
+    print(request.form)
+    query = request.args.get('query')
+    if  query:
+        if query == 'clear':
+            agent.trackers.add_or_get_tracker('test_bot').clear_event()
+            return text('all events clear')
+        reply = agent.process(query)
+        return text(reply)
+    return text('I dont know how to answer it')
+
+
 
 @app.route("/events/push",methods=['POST','OPTIONS'])
 async def add_events(request):
@@ -90,36 +110,14 @@ async def view_events(request):
         response['state'] = 'undefined_id'
     return json(response)
 
-@app.route("/inform/add",methods=['POST','OPTIONS'])
-async def add(request):
-    slot_d = request.json.get('slots')
-    tracker_id = request.json.get('id')
-    current_slots =  SlotTool.dict2slotset(slot_d)#get_sample_slot()
-    for s in current_slots:
-        s.print_entity()
-    if not tracker_id:
-        tracker_id ='test_bot'
-    current_tracker = manager.add_or_get_tracker(tracker_id)
-    inform_slots = [s.inform_slot() for s in current_slots]
-    previous_slots = current_tracker.slotset
-    updated_slots = current_tracker.update(previous_slots, inform_slots)
-    current_tracker.slotset = updated_slots
-    # for s in updated_slots:
-    #     s.print_entity()
-    # SlotTool.dict2slotset({'food': 'chinese'})
-    response = dict()
-    response['id'] = tracker_id
-    response['slots'] = SlotTool.slotset2dict(current_tracker.slotset)
-    return json(response)
 
 
 
-
-@app.route('/text')
+@app.route('/text', methods=["GET","POST", "OPTIONS"])
 def handle_request(request):
     return text('Hello world!')
-
+#app.add_route(user_query,'user/send', methods=["GET","POST", "OPTIONS"])
 #http://localhost:8000/
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8000)
+    app.run(host="0.0.0.0", port=5000)
 
