@@ -5,13 +5,13 @@ from TrackerManager import TrackerManager
 from slot_tool import SlotTool
 from event import Event
 from Datebase import DatabaseManger
-from Agent import Agent
+from Agent import Agent,Helper
 from sanic_cors import CORS
 app = Sanic()
 CORS(app)
 manager = TrackerManager()
 db_manager = DatabaseManger()
-agent = Agent(manager,db_manager)
+agent = Helper(manager,db_manager)
 
 @app.route("/test",methods=['GET','POST','OPTIONS'])
 async def test(request):
@@ -54,11 +54,36 @@ async def user_query(request):
     print(request.args)
     print(request.form)
     query = request.args.get('query')
+    intent = request.args.get('intent')
     if  query:
-        if query == 'clear':
+        if query == 'clear_event':
             agent.trackers.add_or_get_tracker('test_bot').clear_event()
+            if intent:
+                agent.set_intent(intent)
             return text('all events clear')
-        reply = agent.process(query)
+        elif query == "clear_slots":
+            agent.trackers.add_or_get_tracker('test_bot').clear_slots()
+            return text('all slots clear')
+        elif query == "check_slots":
+
+            rsp = ""
+            previous_slots = agent.trackers.add_or_get_tracker('test_bot').slotset
+            for s in previous_slots:
+                rsp += (str(s)+" ")
+            return text(rsp)
+        # elif any([query.endswith(intent) for intent in ['navigate','weather','reminder']]):
+        #     cur = "???"
+        #     for intent in ['navigate','weather','reminder']:
+        #         if query.endswith(intent) and query.startswith("_"):
+        #             cur = intent
+        #             agent.set_intent(cur)
+        #
+        #     return text("set intent ：{}".format(cur))
+        if intent:
+            agent.set_intent(intent)
+            print("current intent is {}".format(agent.intent))
+        reply ,action= agent.process(query)
+        print(action)
         return text(reply)
     return text('I dont know how to answer it')
 

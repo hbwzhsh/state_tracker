@@ -88,6 +88,12 @@ class Navigate(Action):
             return self.set_reminder()
         elif self.action_name == 'action_report_event':
             return self.search_reminder()
+        elif self.action_name == 'action_find_place' :
+            return self.find_poi()
+        elif self.action_name == 'action_report_distance' :
+            return self.find_poi()
+        elif self.action_name == 'action_report_address' :
+            return self.find_poi()
         else:
             new_slots = []
             for s in self.slots:
@@ -302,6 +308,150 @@ class Navigate(Action):
             "event": "dentist appointment"
           }
         ]
+
+    def get_poi_data(self):
+        return [
+            {"address": "593 Arrowhead Way",
+             "poi": "Chef Chu's",
+             "type": "chinese restaurant"},
+            {"address": "394 Van Ness Ave", "poi": "Coupa", "type": "coffee or tea place"},
+            {"address": "408 University Ave",
+             "poi": "Trader Joes",
+             "type": "grocery store"},
+            {"address": "113 Anton Ct", "poi": "Round Table", "type": "pizza restaurant"},
+            {"address": "1313 Chester Ave",
+             "poi": "Hacienda Market",
+             "type": "grocery store"},
+            {"address": "465 Arcadia Pl", "poi": "Four Seasons", "type": "rest stop"},
+            {"address": "830 Almanor Ln", "poi": "tai pan", "type": "chinese restaurant"},
+            {"address": "773 Alger Dr",
+             "poi": "Stanford Shopping Center",
+             "type": "shopping center"},
+            {"address": "53 University Av", "poi": "Shell", "type": "gas station"},
+            {"address": "657 Ames Ave", "poi": "The Clement Hotel", "type": "rest stop"},
+            {"address": "792 Bedoin Street",
+             "poi": "Starbucks",
+             "type": "coffee or tea place"},
+            {"address": "329 El Camino Real", "poi": "The Westin", "type": "rest stop"},
+            {"address": "383 University Ave",
+             "poi": "Town and Country",
+             "type": "shopping center"},
+            {"address": "452 Arcadia Pl", "poi": "Safeway", "type": "grocery store"},
+            {"address": "171 Oak Rd", "poi": "Topanga Mall", "type": "shopping center"},
+            {"address": "842 Arrowhead Way",
+             "poi": "Panda Express",
+             "type": "chinese restaurant"},
+            {"address": "704 El Camino Real",
+             "poi": "Pizza Hut",
+             "type": "pizza restaurant"},
+            {"address": "899 Ames Ct",
+             "poi": "Stanford Childrens Health",
+             "type": "hospital"},
+            {"address": "5677 southwest 4th street",
+             "poi": "5677 southwest 4th street",
+             "type": "certain address"},
+            {"address": "5672 barringer street",
+             "poi": "5672 barringer street",
+             "type": "certain address"},
+            {"address": "214 El Camino Real",
+             "poi": "Stanford Express Care",
+             "type": "hospital"},
+            {"address": "638 Amherst St",
+             "poi": "Sigona Farmers Market",
+             "type": "grocery store"},
+            {"address": "611 Ames Ave",
+             "poi": "Palo Alto Medical Foundation",
+             "type": "hospital"},
+            {"address": "434 Arastradero Rd",
+             "poi": "Ravenswood Shopping Center",
+             "type": "shopping center"},
+            {"address": "338 Alester Ave",
+             "poi": "Midtown Shopping Center",
+             "type": "shopping center"},
+            {"address": "271 Springer Street",
+             "poi": "Mandarin Roots",
+             "type": "chinese restaurant"},
+            {"address": "753 University Ave", "poi": "Comfort Inn", "type": "rest stop"},
+            {"address": "669 El Camino Real",
+             "poi": "P.F. Changs",
+             "type": "chinese restaurant"},
+            {"address": "915 Arbol Dr", "poi": "Pizza Chicago", "type": "pizza restaurant"},
+            {"address": "333 Arbol Dr", "poi": "Travelers Lodge", "type": "rest stop"},
+            {"address": "436 Alger Dr",
+             "poi": "Palo Alto Cafe",
+             "type": "coffee or tea place"},
+            {"address": "5677 springer street",
+             "poi": "5677 springer street",
+             "type": "certain address"},
+            {"address": "113 Arbol Dr", "poi": "Jing Jing", "type": "chinese restaurant"},
+            {"address": "409 Bollard St", "poi": "Willows Market", "type": "grocery store"},
+            {"address": "776 Arastradero Rd", "poi": "Dominos", "type": "pizza restaurant"},
+            {"address": "269 Alger Dr",
+             "poi": "Cafe Venetia",
+             "type": "coffee or tea place"},
+            {"address": "110 Arastradero Rd",
+             "poi": "Papa Johns",
+             "type": "pizza restaurant"},
+            {"address": "550 Alester Ave", "poi": "Dish Parking", "type": "parking garage"},
+            {"address": "578 Arbol Dr", "poi": "Hotel Keen", "type": "rest stop"},
+            {"address": "9981 Archuleta Ave",
+             "poi": "Peets Coffee",
+             "type": "coffee or tea place"},
+            {"address": "200 Alester Ave", "poi": "Valero", "type": "gas station"},
+            {"address": "819 Alma St", "poi": "Whole Foods", "type": "grocery store"},
+            {"address": "91 El Camino Real", "poi": "76", "type": "gas station"},
+            {"address": "583 Alester Ave", "poi": "Philz", "type": "coffee or tea place"},
+            {"address": "270 Altaire Walk",
+             "poi": "Civic Center Garage",
+             "type": "parking garage"},
+            {"address": "610 Amarillo Ave",
+             "poi": "Stanford Oval Parking",
+             "type": "parking garage"},
+            {"address": "347 Alta Mesa Ave", "poi": "jills house", "type": "friends house"},
+            {"address": "880 Ames Ct", "poi": "Webster Garage", "type": "parking garage"},
+            {"address": "864 Almanor Ln", "poi": "jacks house", "type": "friends house"},
+            {"address": "56 cadwell street",
+             "poi": "home_2",
+             "type": "home"},
+            {"address": "5671 barringer street",
+             "poi": "home_3",
+             "type": "home"},
+            {"address": "528 Anton Ct",
+             "poi": "Pizza My Heart",
+             "type": "pizza restaurant"},
+            {"address": "10 ames street",
+             "poi": "home_1",
+             "type": "home"},
+            {"address": "580 Van Ness Ave", "poi": "toms house", "type": "friends house"},
+            {"address": "481 Amaranta Ave",
+             "poi": "Palo Alto Garage R",
+             "type": "parking garage"},
+            {"address": "783 Arcadia Pl", "poi": "Chevron", "type": "gas station"},
+            {"address": "145 Amherst St", "poi": "Teavana", "type": "coffee or tea place"}
+        ]
+
+    def get_all_poi_type(self):
+        return [u.get('type') for u in self.get_poi_data()]
+
+    def get_all_poi_name(self):
+        return [u.get('poi') for u in self.get_poi_data()]
+
+    def get_pois(self,key,value):
+        l = [u for u in self.get_poi_data() if value.lower() in u.get(key).lower()]
+        return l
+
+    def find_poi_by_name(self,name):
+        l = self.get_pois('poi',name)
+        if len(l)>0:
+            return l[0]
+        return None
+
+    def find_poi_by_type(self,type):
+        l = self.get_pois('type',type)
+        if len(l)>0:
+            return l[0]
+        return None
+
     def find_slot_by_type(self,slot_type):
         for slot in self.slots:
             if slot.get_entity_type() == slot_type :
@@ -326,17 +476,23 @@ class Navigate(Action):
             lacks.append('date')
         if not weather_attribute:
             lacks.append('weather')
-
+        rsp = "sry,I dont know how to confirm your statement."
         if (not location) or (not date) or (not weather_attribute):
-            rsp = 'Which city are you interested in? and what day?'+'[!lack info {}]'.format(','.join(lacks))
-        true_weather = None
-        for w in weathers:
-            if w.get('location')and  w.get('location').lower() == location.get_entity_value().lower():
-                true_weather = w.get(date)
-        if weather_attribute.lower() in true_weather.lower():
-            rsp = 'Yes ,it will be '
-        else:
-            rsp = 'No,it will be {} in {} on {}'.format(weather_attribute,location,date)
+            if not location:
+
+                rsp = 'Which city are you interested in? and what day?'+'[!lack info {}]'.format(','.join(lacks))
+            elif not date:
+                rsp = "What day are you interested in?"
+        if date:
+            true_weather = None
+            for w in weathers:
+                if w.get('location')and  w.get('location').lower() == location.get_entity_value().lower():
+                    true_weather = w.get(date.get_entity_value())
+            if  true_weather:
+                if weather_attribute.get_entity_type().lower() in true_weather.lower():
+                    rsp = 'Yes ,it will be '
+                else:
+                    rsp = 'No,it will be {} in {} on {}'.format(true_weather,location.get_entity_value(),date.get_entity_value())
         return rsp
     #"what's the weather like today"
     def how_weather_q(self):
@@ -358,9 +514,9 @@ class Navigate(Action):
             weathers = self.get_weather_data()
             for w in weathers:
                 if w.get('location') and w.get('location').lower() == location.get_entity_value().lower():
-                    true_weather = w.get(date)
+                    true_weather = w.get(date.get_entity_value())
             if true_weather:
-                rsp = 'The forecast show that it will be {} in {}'.format(true_weather,location)
+                rsp = 'The forecast show that it will be {} in {}'.format(true_weather,location.get_entity_value())
             else:
                 rsp = 'sry,cannot find a weather forecast'
         return rsp
@@ -395,7 +551,7 @@ class Navigate(Action):
             else:
                 slot_d[slotname] = None
         found = False
-        if slot_d['event'] and (not slot_d['date'] or not slot_d['time']):
+        if slot_d['event'] and (not slot_d['date'] or not slot_d['time'] or not slot_d['room']):
             for event_item in self.get_schedule_data():
                 if event_item.get('event') == slot_d['event']:
                     rsp = 'The {} is on {} at {}'.format(event_item.get('event'),event_item.get('date'),event_item.get('time'))
@@ -413,6 +569,36 @@ class Navigate(Action):
         if not found:
             rsp = 'sry ,you have not set your event'
         return rsp
+
+    def find_poi(self):
+        slot_d = dict()
+        for slotname in ['poi_type','poi_name']:
+            slot = self.find_slot_by_type(slotname)
+            if slot:
+                slot_d[slotname] = slot.get_entity_value()
+            else:
+                slot_d[slotname] = None
+        lacks = [k for k in slot_d.keys() if slot_d[k]==None]
+        haves = [k for k in slot_d.keys() if slot_d[k]!=None]
+        if 'poi_type' in haves and 'poi_name' not in haves:
+            type = slot_d['poi_type']
+            poi = self.find_poi_by_type(type)
+            if poi:
+                tmp = 'There is a {} around called {}'.format(type,poi['poi'])
+                tmp += 'It is 5 miles away and located in {} .'.format(poi['address'])
+            else:
+                tmp = 'This is no {} around.sorry.'.format(type)
+            return tmp
+        elif 'poi_name' in haves and 'poi_type' not in haves:
+            name = slot_d['poi']
+            poi = self.find_poi_by_name(name)
+            if poi:
+
+                tmp = '{} is 5 miles away and located in {} .'.format(name ,poi['address'])
+            else:
+                tmp = 'I cant find the poi {}.'.format(name)
+            return tmp
+
 
 
 

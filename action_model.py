@@ -44,6 +44,10 @@ class ClassModel():
     def set_verbose(self, verbose):
         self.verbose = verbose
 
+    def product(self,vecs):
+        a, b = vecs
+        # d = a-b
+        return a * b
     def concat(self, X):
         return K.concatenate(X, axis=-1)
     def slice(self,x, turn):
@@ -151,6 +155,18 @@ class ActionModel(ClassModel):
             multi_action_prop_dict[action] = float(prop)
         return self.get_best_action(multi_action_prop_dict)
 
+    def evaluate(self, Xtest, ytest):
+        y_hat = self.model.predict_on_batch(Xtest)
+        index_y_hat = [np.argmax(y_row) for y_row in y_hat]
+        index_y = [np.argmax(y_row) for y_row in ytest]
+        from sklearn.metrics import classification_report
+        all_index = list(range(len(self.kvret_actions())))
+        for i in all_index:
+            if (i not in index_y_hat) or (i not in index_y):
+                index_y.append(i)
+                index_y_hat.append(i)
+        report = classification_report(index_y, index_y_hat, target_names=self.kvret_actions())
+        print(report)
     def CamRest_actions(self):
         more_actions = ['action_goodbye', 'action_morehelp', 'action_inform_address', \
                         'action_inform_food', 'action_inform_phone', \
@@ -159,11 +175,11 @@ class ActionModel(ClassModel):
         return all_action
 
     def kvret_actions(self):
-        navigate = ['action_report_address', 'action_affirm_want_direction', 'action_report_traffic',
-                    'action_report_distance', 'action_set_navigation']
+        navigate = ['action_find_place', 'action_report_address','action_report_distance','action_affirm_want_direction', 'action_report_traffic',
+                    'action_set_navigation']#,
         weather = ['action_ask_location', 'action_check_weather', 'action_clearify']
         schedule = ['action_report_event', 'action_set_reminder', 'action_ask_newevent_time']
-        general = ['action_ok', 'action_morehelp', 'action_goodbye']
+        general = [ 'action_morehelp', 'action_goodbye','action_welcome']#'action_ok',
         all_action = navigate + weather + schedule + general
         return all_action
 
@@ -306,7 +322,7 @@ class ActionModel(ClassModel):
 
     def load_model(self, path):
         print("Using loaded model to predict...")
-        m = load_model(path,custom_objects={"slice":self.slice,"concat":K.concatenate,"py_all":all,'is_sparse':K.is_sparse,'tf':tf,"to_dense":K.to_dense})#
+        m = load_model(path,custom_objects={"slice":self.slice,"concat":K.concatenate,"py_all":all,'is_sparse':K.is_sparse,'tf':tf,"to_dense":K.to_dense,"product":self.product})#
         self.model = m
         return m
 
@@ -413,7 +429,7 @@ class ActionModel(ClassModel):
         best_action = None
         max_p = 0
         for action, p in action_prop_dict.items():
-            if action not in self.allow_action:
+            if action not in self.all_action:
                 continue
             if p > max_p:
                 best_action = action
@@ -624,13 +640,34 @@ class RnnBinaryModel(BinaryModel):
             new_vec = state_his[-self.turn_num:]
         return new_vec
 
-    def binary_predict(self,x):
+    def  binary_predict(self,x,is_binary=True):
         multi_action_prop_dict = dict()
-        for i, action in enumerate(self.all_action):
-            model = self.models[action]
-            prediction = model.predict_on_batch(x)
-            prop = prediction[0][0]
-            multi_action_prop_dict[action] = float(prop)
+        if not is_binary:
+            prediction = self.model.predict_on_batch(x)
+            for i, action in enumerate(self.all_action):
+                prop =prediction[0][i]
+                multi_action_prop_dict[action] = float(prop)
+        else:
+            for i, action in enumerate(self.all_action):
+                model = self.models[action]
+                prediction = model.predict_on_batch(x)
+                prop = prediction[0][0]
+                multi_action_prop_dict[action] = float(prop)
+        return  multi_action_prop_dict
+
+    def  predict_one(self,x,is_binary=True):
+        multi_action_prop_dict = dict()
+        if not is_binary:
+            prediction = self.model.predict(x)
+            for i, action in enumerate(self.all_action):
+                prop =prediction[0][i]
+                multi_action_prop_dict[action] = float(prop)
+        else:
+            for i, action in enumerate(self.all_action):
+                model = self.models[action]
+                prediction = model.predict(x)
+                prop = prediction[0][0]
+                multi_action_prop_dict[action] = float(prop)
         return  multi_action_prop_dict
 
     def get_next_action_from_slot_history(self, history):
@@ -891,22 +928,63 @@ class Glove(DuelRnnCamRest):
         self.is_binary_model = True
         self.max_vocab_size = 1200
         self.model = None
-        self.hidden_size = 100
+        self.hidden_size = 50
         self.turn_number = 3
         self.turn_num = 3
-        self.MAX_SENTENCE_LENGTH = 25
+        self.MAX_SENTENCE_LENGTH = 30
         self.vocab_size, self.embedding_size = 1000, 100
         self.input_shape = (9,)
         self.batch_size = 100
-        self.num_epochs = 20
+        self.num_epochs = 120
         self.X_feature_number = 9
-        self.model_path = "C://model/pretrain_.h5"
-        self.all_action =self.CamRest_actions()
+        self.model_path = "C://model/pretrain_kvret_.h5"
+        self.all_action =self.kvret_actions()
         self.models = dict()
         self.set_slot()
         #self.all_action = ['action_goodbye']
         self.allow_action = self.all_action
         self.word2index = self.get_full_word2index()[0]
+
+    def prepare_krvet(self):
+        from data_loader.loader import load_keret_data
+        train_data = load_keret_data()
+        historys = []
+        Y = []
+        y_indexs = []
+        intent_vecs = []
+        for row in train_data:
+            history,labels,intent = row
+            intent_vec = [0]*3
+            intent_vec[["navigate","schedule","weather"].index(intent)] = 1
+            labels = [l.strip()for l in labels]
+            if 'action_find_place'in labels:
+                if 'action_report_distance' in labels:
+                    labels = ['action_report_distance']
+                elif 'action_report_address' in labels:
+                    labels = ['action_report_address']
+                else:
+                    labels = ['action_find_place']
+            if labels == []:
+                continue
+            label = labels[0]
+            y_ = [0] * len(self.kvret_actions())
+            if label in self.kvret_actions():
+                y_index = self.kvret_actions().index(label)
+                y_[y_index] = 1
+            else:
+                continue
+            Y.append(y_)
+            y_indexs.append(y_index)
+
+            historys.append(history[:-1])
+            intent_vecs.append(intent_vec)
+        intent_vecs = np.array(intent_vecs)
+        array4utt_his = self.get_utterance(historys)
+        return array4utt_his,Y,y_indexs,intent_vecs
+
+
+
+
 
 
     def get_utterance(self, history):
@@ -918,7 +996,10 @@ class Glove(DuelRnnCamRest):
         for turn in history:
             turn_vector = []
             for utterance in turn:
-                words = nltk.word_tokenize(utterance.lower())
+                if type(utterance) is not str:
+                    words = []
+                else:
+                    words = nltk.word_tokenize(utterance.lower())
                 seqs = self.words2seq(words, self.word2index)
                 if len(seqs) > self.MAX_SENTENCE_LENGTH:
                     seqs = seqs[: self.MAX_SENTENCE_LENGTH]
@@ -934,17 +1015,12 @@ class Glove(DuelRnnCamRest):
         print('finish word 2 index')
         return his_data_array
 
-    def build_binary_model(self):
+    def build_binary_model(self,is_binary=True):
         n_class = len(self.all_action)
-        X, Y, data, state_his_s, labels, history_utterances = get_X_Y_from_raw_text()
-        #self.build_counter(history_utterances)
         word_index,vocab_size,embedding_index = self.get_full_word2index()
         self.word2index  = word_index
         use_pretrain = True
-        #word_index = self.word2index
         EMBEDDING_DIM = 100
-        # x_utterance_concat = Input(shape =(self.MAX_SENTENCE_LENGTH * self.turn_number,), name="concat_utter")
-        #### old impliment
         x_utterance_concat = Input(shape=(self.turn_number * self.MAX_SENTENCE_LENGTH,), name="concat_utter")
         if use_pretrain:
             embedding_matrix = self.get_full_embed_matrix()
@@ -954,25 +1030,19 @@ class Glove(DuelRnnCamRest):
                                            input_length=self.MAX_SENTENCE_LENGTH * self.turn_number,
                                            trainable=False)
             x_embed = pretrain_embedding(x_utterance_concat)
-
         else:
             x_embed = Embedding(self.vocab_size, self.embedding_size,
                                 input_length=self.MAX_SENTENCE_LENGTH * self.turn_number)(x_utterance_concat)
-
         x_embed = Reshape((self.turn_number, self.MAX_SENTENCE_LENGTH,self.embedding_size), name='to_turn_length')(
             x_embed)
-
-
         turn = dict()
         for i in range(self.turn_number):
             turn[i] = Lambda(self.slice, arguments={'turn': i})(x_embed)
-
         word_level_rnns = dict()
         for i in range(self.turn_number):
             x_embed = turn[i]
             x_embed = Reshape((self.MAX_SENTENCE_LENGTH, 100))(x_embed)
             inputs_drop = SpatialDropout1D(0.2)(x_embed)
-
             word_level_rnn = Bidirectional(
                 LSTM(self.hidden_size, dropout=0.1, recurrent_dropout=0.1, name='RNN',
                      return_sequences=False))(inputs_drop)
@@ -984,16 +1054,51 @@ class Glove(DuelRnnCamRest):
         turn_combined = Lambda(concat, arguments={'axis': 1})(
             word_level_rnns_list)
         sentence_level_rnn = Bidirectional(
-            LSTM(self.hidden_size//2, dropout=0.1, recurrent_dropout=0.1, name='RNN',
+            LSTM(self.hidden_size, dropout=0.1, recurrent_dropout=0.1, name='RNN',
                  return_sequences=False))(turn_combined)
+        has_intent = True
+        #if has_intent:
+        x_intent = Input(shape=(3,), name="intent_input")
+        coef = Dense(self.hidden_size *2)(x_intent)
+        sentence_level_rnn =out = Lambda(self.product)([coef, sentence_level_rnn])
+        multi_class_layer = Dense(len(self.kvret_actions()), activation='softmax')(sentence_level_rnn)
         binary = Dense(1, activation='sigmoid')(sentence_level_rnn)
-        model = Model(inputs=x_utterance_concat, outputs=binary)
-        model.compile(optimizer="adam",
-                      loss='binary_crossentropy',
-                      metrics=['accuracy'])
+        inputs = x_utterance_concat
+        #if has_intent:
+        inputs = [x_utterance_concat,x_intent]
+        if is_binary:
+            model = Model(inputs= inputs, outputs=binary)
+            model.compile(optimizer="adam",
+                          loss='binary_crossentropy',
+                          metrics=['accuracy'])
+        else:
+            model = Model(inputs= inputs, outputs=multi_class_layer)
+            model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
         self.model = model
         return model
 
+    def get_next_action_from_utters_intent(self,utters,intent = None):
+        # utters = [
+        #     'Please give me an address and directions to the Peets coffee, and take the fastest route available. ',
+        #     'Peets Coffee is located at 9981 Archuleta Ave. but a car collision is nearby on the route. I will try to find the quickest route possible.  ']
+        # utters = ['Will the weather be warm in Menlo Park on Sunday?',
+        #           'The highest temperature on sunday is 30F in menlo park']
+        vec = self.utters2vec(utters)
+        vec = np.array(vec).reshape(( self.MAX_SENTENCE_LENGTH * self.        turn_number))
+        vec = np.expand_dims(vec, 0)
+        if intent:
+            intent_vec = [0] * 3
+            intent_vec[["navigate", "schedule", "weather"].index(intent)] = 1
+            intent_vec = np.array(intent_vec)
+            intent_vec = np.expand_dims(intent_vec, 0)
+            x = [vec,intent_vec]
+
+            multi_action_prop_dict = self.predict_one(x,False)
+            #multi_action_prop_dict = self.model.predict(x=[vec, intent_vec])
+        else:
+            multi_action_prop_dict = self.binary_predict(vec, False)
+        best_action = self.get_best_action(multi_action_prop_dict)
+        return best_action
 class MultiClassModel(ActionModel):
     def __init__(self, parameter=None):
         # self.__init__()
@@ -1056,6 +1161,7 @@ class MultiClassModel(ActionModel):
 
         model = Model(inputs=[x, x_utterance_concat], outputs=class_layer)
         # model = Model(inputs = x_utterance_concat, outputs = class_layer)
+
         model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
         self.model = model
 
@@ -1262,13 +1368,6 @@ class MultiClassModel(ActionModel):
                        validation_data=(his_test, ytest), verbose=self.verbose)
         self.evaluate(his_test, ytest)
 
-    def evaluate(self, Xtest, ytest):
-        y_hat = self.model.predict_on_batch(Xtest)
-        index_y_hat = [np.argmax(y_row) for y_row in y_hat]
-        index_y = [np.argmax(y_row) for y_row in ytest]
-        from sklearn.metrics import classification_report
-        report = classification_report(index_y, index_y_hat, target_names=self.all_action)
-        print(report)
 
     def utters2vec(self, us):
         turn_vector = []
@@ -1886,12 +1985,66 @@ class HybridDuelRnnModel(DuelRnnCamRest):
 # binary.load_data_and_train()
 
 # g = Glove()
-# g.load_data_and_train()
+# g.all_action = g.kvret_actions()
+# X,y ,y_indexs= g.prepare_krvet()
+# y = np.array(y).reshape((-1,len(g.all_action)))
+# #y
+# g.build_binary_model(False)
+# Xtrain, Xtest, ytrain, ytest = train_test_split(X, y, test_size=0.1,
+#                                                  random_state=42)
+# #
+# g.model.fit(Xtrain, ytrain, batch_size=g.batch_size, verbose=2,
+#                epochs=80,
+#                validation_data=(Xtest, ytest))
+# # g.save(g.model_path)
+# g.load_model(g.model_path)
+# g.evaluate(Xtest,ytest)
+# utters = ['Please give me an address and directions to the Peets coffee, and take the fastest route available. ','Peets Coffee is located at 9981 Archuleta Ave. but a car collision is nearby on the route. I will try to find the quickest route possible.  ']
+# utters = ['Will the weather be warm in Menlo Park on Sunday?','The highest temperature on sunday is 30F in menlo park']
+# vec = g.utters2vec(utters)
+# vec = np.array(vec).reshape((1, g.MAX_SENTENCE_LENGTH * g.turn_number))
+# multi_action_prop_dict = g.binary_predict(vec,False)
+# # print(multi_action_prop_dict)
+# best_action = g.get_best_action(multi_action_prop_dict)
+# print(best_action)
+def evaluate():
+    g = Glove()
+    g.model_path = "C://model/pretrain_kvret_.h5"
+    g.all_action = g.kvret_actions()
+    X,y ,y_indexs,intents = g.prepare_krvet()
+    Xtrain, Xtest, ytrain, ytest ,intent_train,intent_test= train_test_split(X, y,intents, test_size=0.1,
+                                                     random_state=42)
+    g.load_model(g.model_path)
+    g.evaluate([Xtest,intent_test],ytest)
+def train():
+    g = Glove()
+    g.model_path = "C://model/pretrain_kvret_.h5"
+    g.all_action = g.kvret_actions()
+    X,y ,y_indexs,intents= g.prepare_krvet()
+    g.build_binary_model(False)
+    y = np.array(y).reshape((-1,len(g.all_action)))
+    Xtrain, Xtest, ytrain, ytest ,intent_train,intent_test= train_test_split(X, y,intents, test_size=0.1,
+                                                     random_state=42)
+    #
+    g.model.fit([Xtrain,intent_train], ytrain, batch_size=g.batch_size, verbose=2,
+                   epochs=100,
+                   validation_data=([Xtest,intent_test], ytest))
+    g.save(g.model_path)
+#train()
 
-#g.load_models()
-# g.word2index = g.get_full_word2index()[0]
-# r = g.get_next_action_from_utters(['Are there a restaurant that serves chinese food?'])
-# print(r)
-#
-# us = ['find me a  cafe in the south of the town']
-# g.get_next_action_from_utters(us)
+def function_test():
+    utters = ['Whats the two day forecast for new york, does it say it will be hot?']
+    action_model = Glove()
+    action_model.model_path = "C://model/pretrain_kvret_.h5"
+    m = action_model.load_model(action_model.model_path)
+    # print(m.summary())
+    r = action_model.get_next_action_from_utters_intent(utters, 'weather')
+    print(r)
+    r = 0
+    utters = ["get me directions to the nearest shopping mall"]
+    r = action_model.get_next_action_from_utters_intent(utters, 'navigate')
+    print(r)
+    utters = ["tell me the time of today's meeting"]
+    r = action_model.get_next_action_from_utters_intent(utters, 'schedule')
+    print(r)
+    i = 0
