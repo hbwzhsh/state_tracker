@@ -2,6 +2,7 @@ from entity import Entity
 from action import Action
 import json
 import random
+import requests
 data_path = 'C://CamRestDB.json'
 class Task():
     def __init__(self,name):
@@ -460,6 +461,51 @@ class Navigate(Action):
                 return slot.cut_inform()
         return None
 
+    def get_city_weather(self,city):
+        url  ="http://api.openweathermap.org/data/2.5/weather?q={}&APPID=0d11a89593c5bde6a3a7cf1094eac1b1".format(city)
+        r = requests.get(url)
+        return r.json()
+
+    def get_city_weather_forecast(self,city):
+        url  ="http://api.openweathermap.org/data/2.5/forecast?q={}&APPID=0d11a89593c5bde6a3a7cf1094eac1b1&units=metric".format(city)
+        r = requests.get(url)
+        return r.json()
+
+
+    def get_weathers_from_json(self,rsp):
+        weathers = rsp.get("list")
+        new_d = []
+        for weather in weathers:
+            d = {}
+
+            tmp = weather.get("main")
+            degree= 20
+            if tmp:
+                degree = tmp.get("temp")
+            d["temperture"] = degree
+            dpt = ""
+            if weather.get("weather"):
+                dpt = weather.get("weather")[0].get("description")
+            d["description"] = dpt
+            dt_txt = weather.get("dt_txt")
+            #"2019-06-05 18:00:00"
+            date_seg = dt_txt.split(" ")[0]
+            time_seg = dt_txt.split(" ")[1]
+            year,month,day = [int(u) for u in date_seg.split("-")]
+            hour,min,sec = [int(u) for u in time_seg.split(":")]
+
+            d["year"] = year
+            d["month"] = month
+            d["day"] = day
+            d["hour"] = hour
+            new_d.append(d)
+            # import time
+            # current = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()
+        return new_d
+
+
+
+
     def is_weather_q(self):
         weathers = self.get_weather_data()
         for s in self.slots:
@@ -479,17 +525,34 @@ class Navigate(Action):
         rsp = "sry,I dont know how to confirm your statement."
         if (not location) or (not date) or (not weather_attribute):
             if not location:
-
-                rsp = 'Which city are you interested in? and what day?'+'[!lack info {}]'.format(','.join(lacks))
+                rsp = 'Which city are you interested in? or what day?'+'[!lack info {}]'.format(','.join(lacks))
+                return(rsp)
             elif not date:
                 rsp = "What day are you interested in?"
+                return(rsp)
         if date:
             true_weather = None
             for w in weathers:
                 if w.get('location')and  w.get('location').lower() == location.get_entity_value().lower():
                     true_weather = w.get(date.get_entity_value())
+
+
+            if date.get_entity_value() in ["today","tomorrow"]:
+                if not location:
+                    raise ValueError("not location found")
+                forecast = self.get_city_weather_forecast(location.get_entity_value())
+                weathers_d = self.get_weathers_from_json(forecast)
+                import time
+                today_date = time.strftime("%d", time.localtime())
+                today_date = int(today_date)
+                target_date = today_date
+                if date.get_entity_value() == "tomorrow":
+                    target_date = today_date+1
+                for w in weathers_d:
+                    if w.get("day") == target_date:
+                        true_weather = w.get("description")
             if  true_weather:
-                if weather_attribute.get_entity_type().lower() in true_weather.lower():
+                if weather_attribute.get_entity_value().lower() in true_weather.lower():
                     rsp = 'Yes ,it will be '
                 else:
                     rsp = 'No,it will be {} in {} on {}'.format(true_weather,location.get_entity_value(),date.get_entity_value())
@@ -511,10 +574,24 @@ class Navigate(Action):
             rsp = 'Which city are you interested in? and what day?'
         else:
             true_weather = None
-            weathers = self.get_weather_data()
-            for w in weathers:
-                if w.get('location') and w.get('location').lower() == location.get_entity_value().lower():
-                    true_weather = w.get(date.get_entity_value())
+            #weathers = self.get_weather_data()
+            if date.get_entity_value() in ["today","tomorrow"]:
+                if not location:
+                    raise ValueError("not location found")
+                forecast = self.get_city_weather_forecast(location.get_entity_value())
+                weathers_d = self.get_weathers_from_json(forecast)
+                import time
+                today_date = time.strftime("%d", time.localtime())
+                today_date = int(today_date)
+                target_date = today_date
+                if date.get_entity_value() == "tomorrow":
+                    target_date = today_date+1
+                for w in weathers_d:
+                    if w.get("day") == target_date:
+                        true_weather = w.get("description")
+            # for w in weathers:
+            #     if w.get('location') and w.get('location').lower() == location.get_entity_value().lower():
+            #         true_weather = w.get(date.get_entity_value())
             if true_weather:
                 rsp = 'The forecast show that it will be {} in {}'.format(true_weather,location.get_entity_value())
             else:
@@ -599,9 +676,9 @@ class Navigate(Action):
                 tmp = 'I cant find the poi {}.'.format(name)
             return tmp
 
-
-
-
+#
+# print(Navigate("",{}).get_city_weather("London"))
+#
 
 
 

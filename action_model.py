@@ -28,8 +28,29 @@ import random
 import collections
 import nltk
 import os
-
+from reader import load_config,auto_type_set
 class ClassModel():
+    def __init__(self):
+        self.max_vocab_size = 1200
+        self.verbose = 0
+        self.hidden_size = 300
+        self.batch_size = 20
+        self.num_epochs = 6
+        self.X_feature_number = 9
+        self.MAX_SENTENCE_LENGTH  = 30
+        self.turn_number = 3
+        self.model_path = "D://model/policy_learner_single.h5"
+
+    def config_path(self):
+        return "config.cf"
+
+    def do_config(self):
+        config_dict = load_config(self.config_path())
+        config_dict = auto_type_set(config_dict)
+        for att in self.__dict__.keys():
+            if att in config_dict.keys():
+                self.__dict__[att] = config_dict[att]
+
     # keras
     @staticmethod
     def get_freq_word(self,top_n):
@@ -108,20 +129,10 @@ class ActionModel(ClassModel):
 
 
     def default_config(self):
+        self.do_config()
         self.is_binary_model = False
-        self.max_vocab_size = 1200
-        self.verbose = 0
         self.model = None
-        self.hidden_size = 300
         self.input_shape = (9,)
-        self.batch_size = 20
-        self.num_epochs = 6
-        self.X_feature_number = 9
-        self.MAX_SENTENCE_LENGTH  = 30
-        self.turn_number = 3
-        self.verbose = 2
-
-        self.model_path = "D://model/policy_learner_single.h5"
         self.all_action = self.CamRest_actions()
         self.loss_d = {k: 'binary_crossentropy' for k in self.all_action}
         self.lossweight_d = {k: 1. for k in self.all_action}
@@ -565,20 +576,20 @@ class BinaryModel(ActionModel):
 
 class RnnBinaryModel(BinaryModel):
 
+
+
     def default_config(self):
+        self.do_config()
         self.x_feature = 9
         self.is_binary_model = True
         self.model = None
-        self.hidden_size = 100
-        self.rnn_hidden_size = 200
-        self.verbose =2
-        self.config()
-        self.X_feature_number = 9
-        self.input_shape = (self.turn_num, self.X_feature_number)
-        self.batch_size = 100
-        self.num_epochs = 30
 
-        self.model_path = "C://model/policy_learner_single.h5"
+        self.rnn_hidden_size = 200
+
+        self.config()
+
+        self.input_shape = (self.turn_num, self.X_feature_number)
+
 
         self.all_action = self.CamRest_actions()
         self.loss_d = {k: 'binary_crossentropy' for k in self.all_action}
@@ -592,7 +603,7 @@ class RnnBinaryModel(BinaryModel):
         new_data = []
         for state_his in state_his_s:
             if len(state_his) < self.turn_num:
-                d = self.turn_num - len(state_his)
+                d = self.turn_number- len(state_his)
                 left_pad = [[0] * feature_number for i in range(d)]
                 left_pad.extend(state_his)
                 new_data.append(left_pad)
@@ -606,7 +617,7 @@ class RnnBinaryModel(BinaryModel):
         return new_data
 
     def config(self):
-        self.turn_num = 3
+        self.turn_number= 3
 
     def build_binary_model(self):
         x = Input(shape=(self.turn_num, self.X_feature_number), name="input")
@@ -629,7 +640,7 @@ class RnnBinaryModel(BinaryModel):
     def slot_state_padding(self,state_his):
         new_vec = []
         if len(state_his) < self.turn_num:
-            d = self.turn_num - len(state_his)
+            d = self.turn_number- len(state_his)
             left_pad = [[0] * self.X_feature_number for i in range(d)]
             left_pad.extend(state_his)
 
@@ -743,7 +754,7 @@ class RnnBinaryModel(BinaryModel):
                 if [turn, hidden_size, rnn] not in finish:
                     finish.append([turn, hidden_size, rnn])
 
-            self.turn_num = turn_n
+            self.turn_number= turn_n
             new_data = self.history_padding(state_his_s, self.X_feature_number)
             data = [d for d in zip(new_data, labels) if d[1] != []]
             Y = [d[1] for d in data]
@@ -832,18 +843,9 @@ class DuelRnnCamRest(RnnBinaryModel):
 
     def default_config(self):
         self.is_binary_model = True
-        self.max_vocab_size = 1200
         self.model = None
-        self.hidden_size = 250
-        self.turn_number = 3
-        self.turn_num = 3
-        self.MAX_SENTENCE_LENGTH = 30
         self.vocab_size, self.embedding_size = 1000, 100
         self.input_shape = (9,)
-        self.batch_size = 100
-        self.num_epochs = 50
-        self.X_feature_number = 9
-        self.model_path = "D://model/policy_learner_single.h5"
         self.all_action =self.CamRest_actions()
         self.set_slot()
         self.allow_action = self.all_action
@@ -929,9 +931,9 @@ class Glove(DuelRnnCamRest):
         self.max_vocab_size = 1200
         self.model = None
         self.hidden_size = 50
-        self.turn_number = 3
-        self.turn_num = 3
-        self.MAX_SENTENCE_LENGTH = 30
+        self.turn_number = 5
+        self.turn_number= 5
+        self.MAX_SENTENCE_LENGTH = 35
         self.vocab_size, self.embedding_size = 1000, 100
         self.input_shape = (9,)
         self.batch_size = 100
@@ -945,6 +947,18 @@ class Glove(DuelRnnCamRest):
         self.allow_action = self.all_action
         self.word2index = self.get_full_word2index()[0]
 
+
+    def clean_labels(self,labels):
+        labels = [l.strip() for l in labels]
+        if 'action_find_place' in labels:
+            if 'action_report_distance' in labels:
+                labels = ['action_report_distance']
+            elif 'action_report_address' in labels:
+                labels = ['action_report_address']
+            else:
+                labels = ['action_find_place']
+        return labels
+
     def prepare_krvet(self):
         from data_loader.loader import load_keret_data
         train_data = load_keret_data()
@@ -952,21 +966,25 @@ class Glove(DuelRnnCamRest):
         Y = []
         y_indexs = []
         intent_vecs = []
+        x_features = []
+        last_Ys =[]
         for row in train_data:
-            history,labels,intent = row
+            history,labels,intent,last_labels = row
             intent_vec = [0]*3
             intent_vec[["navigate","schedule","weather"].index(intent)] = 1
-            labels = [l.strip()for l in labels]
-            if 'action_find_place'in labels:
-                if 'action_report_distance' in labels:
-                    labels = ['action_report_distance']
-                elif 'action_report_address' in labels:
-                    labels = ['action_report_address']
-                else:
-                    labels = ['action_find_place']
+            labels = self.clean_labels(labels)
+            last_labels = self.clean_labels(last_labels)
             if labels == []:
                 continue
             label = labels[0]
+            if last_labels ==[]:
+                y_last = [0] * len(self.kvret_actions())
+            else:
+                y_last = [0] * len(self.kvret_actions())
+                l2 = last_labels[0]
+                if l2 in self.kvret_actions():
+                    y_index = self.kvret_actions().index(l2)
+                    y_last[y_index] = 1
             y_ = [0] * len(self.kvret_actions())
             if label in self.kvret_actions():
                 y_index = self.kvret_actions().index(label)
@@ -975,12 +993,15 @@ class Glove(DuelRnnCamRest):
                 continue
             Y.append(y_)
             y_indexs.append(y_index)
-
+            last_Ys.append(y_last)
             historys.append(history[:-1])
             intent_vecs.append(intent_vec)
+            x_features.append(intent_vec+y_last)
         intent_vecs = np.array(intent_vecs)
+        last_Ys = np.array(last_Ys)
         array4utt_his = self.get_utterance(historys)
-        return array4utt_his,Y,y_indexs,intent_vecs
+        x_features = np.array(x_features)
+        return array4utt_his,Y,y_indexs,intent_vecs,last_Ys,x_features
 
 
 
@@ -1015,13 +1036,15 @@ class Glove(DuelRnnCamRest):
         print('finish word 2 index')
         return his_data_array
 
-    def build_binary_model(self,is_binary=True):
+    def build_binary_model(self,is_binary=True,add_last_action=False):
         n_class = len(self.all_action)
         word_index,vocab_size,embedding_index = self.get_full_word2index()
         self.word2index  = word_index
         use_pretrain = True
         EMBEDDING_DIM = 100
         x_utterance_concat = Input(shape=(self.turn_number * self.MAX_SENTENCE_LENGTH,), name="concat_utter")
+        if add_last_action:
+            x_last_action = Input(shape=(len(self.kvret_actions()),), name="last_action_vector")
         if use_pretrain:
             embedding_matrix = self.get_full_embed_matrix()
             pretrain_embedding = Embedding(len(word_index),
@@ -1058,14 +1081,22 @@ class Glove(DuelRnnCamRest):
                  return_sequences=False))(turn_combined)
         has_intent = True
         #if has_intent:
-        x_intent = Input(shape=(3,), name="intent_input")
-        coef = Dense(self.hidden_size *2)(x_intent)
-        sentence_level_rnn =out = Lambda(self.product)([coef, sentence_level_rnn])
+        final_layer_size = 2 * self.hidden_size
+        sentence_level_rnn = Dense(final_layer_size)(sentence_level_rnn)
+        x_intent = Input(shape=(3+len(self.kvret_actions()),), name="intent_input")
+        coef = Dense(final_layer_size)(x_intent)
+
+        sentence_level_rnn = Lambda(self.product)([coef, sentence_level_rnn])
+        if add_last_action:
+            coef_last_action = Dense(final_layer_size)(x_last_action)
+            sentence_level_rnn = Lambda(self.product)([coef_last_action, sentence_level_rnn])
         multi_class_layer = Dense(len(self.kvret_actions()), activation='softmax')(sentence_level_rnn)
         binary = Dense(1, activation='sigmoid')(sentence_level_rnn)
         inputs = x_utterance_concat
         #if has_intent:
-        inputs = [x_utterance_concat,x_intent]
+        inputs = [x_utterance_concat, x_intent]
+        if add_last_action:
+            inputs.append(x_last_action)
         if is_binary:
             model = Model(inputs= inputs, outputs=binary)
             model.compile(optimizer="adam",
@@ -1077,28 +1108,46 @@ class Glove(DuelRnnCamRest):
         self.model = model
         return model
 
-    def get_next_action_from_utters_intent(self,utters,intent = None):
-        # utters = [
-        #     'Please give me an address and directions to the Peets coffee, and take the fastest route available. ',
-        #     'Peets Coffee is located at 9981 Archuleta Ave. but a car collision is nearby on the route. I will try to find the quickest route possible.  ']
-        # utters = ['Will the weather be warm in Menlo Park on Sunday?',
-        #           'The highest temperature on sunday is 30F in menlo park']
+    def array_from_utters(self, utters):
         vec = self.utters2vec(utters)
         vec = np.array(vec).reshape(( self.MAX_SENTENCE_LENGTH * self.        turn_number))
         vec = np.expand_dims(vec, 0)
+        return vec
+    def get_next_action_from_utters_intent(self,utters,intent = None):
+        vec = self.array_from_utters(utters)
         if intent:
             intent_vec = [0] * 3
             intent_vec[["navigate", "schedule", "weather"].index(intent)] = 1
             intent_vec = np.array(intent_vec)
             intent_vec = np.expand_dims(intent_vec, 0)
             x = [vec,intent_vec]
-
             multi_action_prop_dict = self.predict_one(x,False)
             #multi_action_prop_dict = self.model.predict(x=[vec, intent_vec])
         else:
             multi_action_prop_dict = self.binary_predict(vec, False)
         best_action = self.get_best_action(multi_action_prop_dict)
         return best_action
+
+    def one_hot(self,value,valueset):
+        vec = [0] * len(valueset)
+        vec[valueset.index(value)] = 1
+        vec = np.array(vec)
+        return vec
+
+    def get_next_action_from_utters_intent_lastact(self,utters, intent,lastact):
+        vec = self.array_from_utters(utters)
+        intent_vec = [0] * 3
+        intent_vec[["navigate", "schedule", "weather"].index(intent)] = 1
+        intent_vec = np.array(intent_vec)
+        act_vec = self.one_hot(lastact,self.kvret_actions())
+        cb= intent_vec.tolist()+act_vec.tolist()
+        cb = np.array(cb)
+        cb = np.expand_dims(cb, 0)
+        multi_action_prop_dict = self.predict_one([vec,cb], False)
+        best_action = self.get_best_action(multi_action_prop_dict)
+        return best_action
+
+
 class MultiClassModel(ActionModel):
     def __init__(self, parameter=None):
         # self.__init__()
@@ -1394,9 +1443,6 @@ class MultiClassModel(ActionModel):
         best_action = self.get_best_action(multi_action_prop_dict)
         print(best_action)
         return best_action
-
-
-
 
 
 class TfRnnModel(MultiClassModel):
@@ -1787,174 +1833,6 @@ class HybridDuelRnnModel(DuelRnnCamRest):
             stat = classification_report(ytest, y_hat)
             print(action,stat)
 
-    def get_var(self):
-        tf.set_random_seed(1)
-        lr = 0.001
-        # Define weights
-        weights = {
-            # (28, 128)
-            'in': tf.Variable(tf.random_normal([self.embedding_size, self.hidden_size*2])),
-            # (128, 10)
-            'out': tf.Variable(tf.random_normal([self.hidden_size*2,2]))
-        }
-        biases = {
-            # (128, )
-            'in': tf.Variable(tf.constant(0.1, shape=[self.hidden_size*2, ])),
-            # (10, )
-            'out': tf.Variable(tf.constant(0.1, shape=[2, ]))
-        }
-        # tf Graph input
-        x = tf.placeholder(tf.int32, [None, self.MAX_SENTENCE_LENGTH * self.turn_number])
-        W = tf.Variable(tf.random_uniform([self.vocab_size, self.embedding_size], -1.0, 1.0), name="W")
-        y = tf.placeholder(tf.float32, [None, 2])
-
-        slot_state = tf.placeholder(tf.float32, [None,  self.turn_number,self.X_feature_number])
-
-        return lr, weights, biases, x, W, y,slot_state
-
-    def tf_train(self, x, y, slot,his_train, his_test,slot_train,slot_test, ytrain, ytest, train_op, accuracy):
-        # his_train, his_test, ytrain, ytest
-
-        data = []
-        # slot,utt,label
-        for i in range(len(ytrain)):
-            slot_,utt,label = slot_train[i],his_train[i],ytrain[i]
-            data.append([slot_,utt,label])
-        with tf.Session() as sess:
-            if int((tf.__version__).split('.')[1]) < 12 and int((tf.__version__).split('.')[0]) < 1:
-                init = tf.initialize_all_variables()
-            else:
-                init = tf.global_variables_initializer()
-            sess.run(init)
-            step = 0
-            time = 0
-            training_iters = len(ytrain)  # ((step + 2) * self.batch_size) < training_iters
-            max_step = int(training_iters / self.batch_size)
-            while time < 800:
-                # print('{},{},{},{}'.format(step,batch_size,training_iters,(step+1) * batch_size ))
-                batch_slots,batch_utts, batch_ys = self.get_batch(data, step, self.batch_size)
-                batch_slots =np.array(batch_slots).reshape((-1,self.turn_num,self.X_feature_number))
-                sess.run([train_op], feed_dict={
-                    x: batch_utts,
-                    y: batch_ys,
-                    slot:batch_slots
-                })
-                if time % 8 == 0 or time > 790:
-                    print(time // (max_step - 2))
-                    print((time) * self.batch_size, sess.run(accuracy, feed_dict={
-                        x: his_test[-self.batch_size:],
-                        y: ytest[-self.batch_size:],
-                        slot: slot_test[-self.batch_size:]
-                    }))
-                step = (step + 1) % (max_step - 2)
-                time += 1
-
-
-        return sess
-    def get_batch(self, data, step, batch_size):
-        data = data[step * batch_size:(step + 1) * batch_size]
-        return [u[0] for u in data], [u[1] for u in data], [u[2] for u in data]
-
-    def double_rnn_tf(self):
-        X, Y, _, state_his_s, labels, uss = get_X_Y_from_raw_text()
-        his_data_array = self.get_utterance(uss)
-        # new_data = self.history_padding(uss, self.MAX_SENTENCE_LENGTH)
-
-        data = []
-        for i in range(len(labels)):
-            slot,utt,label = state_his_s[i],his_data_array[i],labels[i]
-            data.append([slot,utt,label])
-
-        data = [d for d in data if d[2] != []]
-        Y = [d[2] for d in data]
-        his_data_array = [d[1] for d in data]
-        slot_state_his = [d[0] for d in data]
-        slot_state_his = self.history_padding(slot_state_his,self.X_feature_number)
-        slot_state_his = [[[float(e) for e in d] for d in r] for r in slot_state_his]
-
-        y_dict = self.get_action_label_dict(Y)
-        Y = y_dict.get('action_search_rest')
-        Y_ = []
-        for y in Y:
-            if y == 1:
-                Y_.append([0,1])
-            else:
-                Y_.append([1,0])
-        #Y = [[0,1] for y in Y if y == 0 else [1,0]]
-        Y = Y_
-
-
-        lr, weights, biases, x, W, y ,slot_state= self.get_var()
-        embedded_chars = tf.nn.embedding_lookup(W, x)
-        # ?,160,embedding
-        add_dim = tf.reshape(embedded_chars, (-1, self.turn_number, self.MAX_SENTENCE_LENGTH, self.embedding_size))
-        # (?,4,40,200)
-        # trans = tf.transpose(add_dim, perm=[0, ])
-        turn = dict()
-        # basic LSTM Cell.
-        if int((tf.__version__).split('.')[1]) < 12 and int((tf.__version__).split('.')[0]) < 1:
-            cell = tf.nn.rnn_cell.BasicLSTMCell(self.hidden_size, forget_bias=1.0, state_is_tuple=True, name='word_RNN')
-        else:
-            cell = tf.contrib.rnn.BasicLSTMCell(self.hidden_size, name='word_RNN')
-        for i in range(self.turn_num):
-            turn[i] = add_dim[:, i, :, :]
-            turn[i] = tf.reshape(turn[i], (-1, self.MAX_SENTENCE_LENGTH, self.embedding_size))
-            init_state = cell.zero_state(self.batch_size, dtype=tf.float32)
-            outputs, final_state = tf.nn.dynamic_rnn(cell, turn[i], initial_state=init_state, time_major=False)
-            tp = tf.transpose(outputs, [1, 0, 2])
-            if int((tf.__version__).split('.')[1]) < 12 and int((tf.__version__).split('.')[0]) < 1:
-                outputs = tf.unpack(tp)  # states is the last outputs
-            else:
-                outputs = tf.unstack(tp)
-            turn[i] = outputs[-1]  #
-
-        for t in range(self.turn_num):
-            turn[t] = tf.reshape(turn[t], (-1, 1, self.hidden_size))
-        all_turns = [turn[i] for i in range(self.turn_num)]
-        turns = tf.concat(all_turns, axis=1)
-        # basic LSTM Cell.
-        with tf.variable_scope('sentence_RNN'):
-            if int((tf.__version__).split('.')[1]) < 12 and int((tf.__version__).split('.')[0]) < 1:
-                cell = tf.nn.rnn_cell.BasicLSTMCell(self.hidden_size, forget_bias=1.0, state_is_tuple=True,
-                                                    name='sentence_RNN')
-            else:
-                cell = tf.contrib.rnn.BasicLSTMCell(self.hidden_size, name='sentence_RNN')
-            # lstm cell is divided into two parts (c_state, h_state)
-            init_state = cell.zero_state(self.batch_size, dtype=tf.float32)
-            outputs, final_state = tf.nn.dynamic_rnn(cell, turns, initial_state=init_state, time_major=False)
-            tp = tf.transpose(outputs, [1, 0, 2])
-            if int((tf.__version__).split('.')[1]) < 12 and int((tf.__version__).split('.')[0]) < 1:
-                outputs = tf.unpack(tp)  # states is the last outputs
-            else:
-                outputs = tf.unstack(tp)
-            rnn_output = outputs[-1]  #
-
-
-        # slot model
-        if int((tf.__version__).split('.')[1]) < 12 and int((tf.__version__).split('.')[0]) < 1:
-            cell = tf.nn.rnn_cell.BasicLSTMCell(self.hidden_size, forget_bias=1.0, state_is_tuple=True, name='slot_RNN')
-        else:
-            cell = tf.contrib.rnn.BasicLSTMCell(self.hidden_size, name='slot_RNN1')
-        init_state = cell.zero_state(self.batch_size, dtype=tf.float32)
-        slot_state_outputs, final_state = tf.nn.dynamic_rnn(cell,slot_state, initial_state=init_state, time_major=False)
-        tp = tf.transpose(slot_state_outputs, [1, 0, 2])
-        if int((tf.__version__).split('.')[1]) < 12 and int((tf.__version__).split('.')[0]) < 1:
-            outputs = tf.unpack(tp)  # states is the last outputs
-        else:
-            outputs = tf.unstack(tp)
-        slot_state_halt = outputs[-1]  #
-        hybird = tf.concat([rnn_output, slot_state_halt], axis=1)
-
-        pred = tf.matmul(hybird, weights['out']) + biases['out']  # shape = (128, 10)
-        cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(logits=pred, labels=y))
-        train_op = tf.train.AdamOptimizer(lr).minimize(cost)
-        correct_pred = tf.equal(tf.argmax(pred, 1), tf.argmax(y, 1))
-        accuracy = tf.reduce_mean(tf.cast(correct_pred, tf.float32))
-
-        his_train, his_test, ytrain, ytest ,slot_train,slot_test= train_test_split(his_data_array, Y,slot_state_his, test_size=0.1,
-                                                              random_state=42)
-        sess = self.tf_train(x, y,slot_state, his_train, his_test, slot_train,slot_test,ytrain, ytest, train_op, accuracy)
-
 
 
 # m = MultiClassModel()
@@ -2020,16 +1898,21 @@ def train():
     g = Glove()
     g.model_path = "C://model/pretrain_kvret_.h5"
     g.all_action = g.kvret_actions()
-    X,y ,y_indexs,intents= g.prepare_krvet()
-    g.build_binary_model(False)
+    X,y ,y_indexs,intents,last_y,intent_last_act= g.prepare_krvet()
+    g.build_binary_model(False,add_last_action=False)
     y = np.array(y).reshape((-1,len(g.all_action)))
-    Xtrain, Xtest, ytrain, ytest ,intent_train,intent_test= train_test_split(X, y,intents, test_size=0.1,
+    Xtrain, Xtest, ytrain, ytest ,intent_train,intent_test= train_test_split(X, y,intent_last_act, test_size=0.1,
                                                      random_state=42)
-    #
+
+    # Xtrain, Xtest, ytrain, ytest ,last_ytrain,last_ytest,intent_train,intent_test= train_test_split(X, y,last_y,intents, test_size=0.1,
+    #                                                  random_state=42)
     g.model.fit([Xtrain,intent_train], ytrain, batch_size=g.batch_size, verbose=2,
                    epochs=100,
                    validation_data=([Xtest,intent_test], ytest))
-    g.save(g.model_path)
+    # g.model.fit([Xtrain,intent_train,last_ytrain], ytrain, batch_size=g.batch_size, verbose=2,
+    #                epochs=100,
+    #                validation_data=([Xtest,intent_test,last_ytest], ytest))
+    g.save(g.model_path+"_lastaction")
 #train()
 
 def function_test():
@@ -2048,3 +1931,13 @@ def function_test():
     r = action_model.get_next_action_from_utters_intent(utters, 'schedule')
     print(r)
     i = 0
+def function_test2():
+    action_model = Glove()
+    action_model.model_path = "C://model/pretrain_kvret_.h5"
+    m = action_model.load_model(action_model.model_path)
+    # print(m.summary())
+    utters = ["what is the weather going to be like tomorrow show me the 7 day forecast","Seattle"]
+    r = action_model.get_next_action_from_utters_intent_lastact(utters, 'weather',"action_ask_location")
+    print(r)
+
+function_test2()

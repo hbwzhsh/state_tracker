@@ -89,7 +89,7 @@ class Helper(Agent):
     def get_action_query(self,q):
         # _actionxxx:query
         if ":" not in q:
-            raise ValueError(": should be inside the query but query is {}".format(q))
+            raise ValueError(" \":\" should be inside the query but query is {}".format(q))
 
         action = q.split(":")[0][1:]
         query = q.split(":")[1]
@@ -151,8 +151,8 @@ class Test():
 
 
 # test
-# manager = TrackerManager()
-# db_manager = DatabaseManger()
+manager = TrackerManager()
+db_manager = DatabaseManger()
 # # # agent = Agent(manager,db_manager)
 # # #
 # # # r = 1
@@ -161,9 +161,9 @@ class Test():
 # # # agent.process('Can I have the address?')
 # # # agent.process('address?')
 # #
-# agent = Helper(manager,db_manager)
-# t = Test(agent)
-# t.run()
+agent = Helper(manager,db_manager)
+t = Test(agent)
+t.run()
 
 # print(agent.process('where\'s the nearest parking garage','navigate'))
 # agent.trackers.add_or_get_tracker('test_id').clear_event()

@@ -1,0 +1,9 @@
+verbose=2
+hidden_size=100
+batch_size=20
+num_epochs=6
+X_feature_number=9
+MAX_SENTENCE_LENGTH=30
+turn_number=3
+model_path="c://model/policy_learner_single.h5"
+max_vocab_size=1100
