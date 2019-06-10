@@ -73,7 +73,8 @@ class Helper(Agent):
         """
         self.slot_model = HelperNER()
         self.action_model = Glove()
-        self.model_path = "C://model/pretrain_kvret_.h5"
+        #self.model_path = "C://model/pretrain_kvret_.h5"
+        self.model_path = "C://model/pretrain_kvret2_.h5"
 
         self.action_model.all_action = self.action_model.kvret_actions()
         self.db_manager  = db_manager
@@ -122,7 +123,11 @@ class Helper(Agent):
             action_name = force_act
         else:
             print('current intent is {}'.format(self.intent))
-            action_name = self.action_model.get_next_action_from_utters_intent(utters,self.intent)
+            #action_name = self.action_model.get_next_action_from_utters_intent(utters,self.intent)
+            print("action",current_tracker.last_action)
+            print("utters",utters)
+            action_name = self.action_model.get_next_action_from_utters_intent_lastact(utters,self.intent,current_tracker.last_action)
+            print("running ",action_name)
         current_tracker.add_user_event(q, slots=updated_slots)
         i = 0
         action = Navigate(action_name, {})
@@ -131,6 +136,7 @@ class Helper(Agent):
         current_tracker.add_bot_event(result)
         if not result:
             result = ""
+        current_tracker.last_action = action_name
         return result,action_name
 
 class Test():

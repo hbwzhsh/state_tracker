@@ -1,0 +1,14 @@
+ action_goodbye :  You are welcome,have a wonderful day. 
+ action_morehelp :  Anything else I can help you with today? 
+ action_ok :  No problem. 
+ action_report_distance :  Mandarin Roots is [found_distance] away. 
+ action_report_address :  The address is [found_address] and there is moderate traffic on the way to the location. 
+ action_affirm_want_direction :   Would you like directions? 
+ action_report_traffic :  The current route  have [found_traffic] traffic 
+ action_set_navigation :  I’ ll send the route with no traffic on your screen, drive carefully! 
+ action_ask_location :  What city are you in?
+ action_check_weather :  The weather in [inform_location] will be snowy on Monday and then on Sunday, cloudy on Tuesday, raining on Wednesday, blizzard on Thursday, lowest temperature on Friday, dry on Saturday 
+ action_clearify :  The forecast does show show that it will be windy in Manhattan today or tomorrow. 
+ action_report_event :  Your next football activity is going to be on Thursday at 11 am with your aunt. 
+ action_set_reminder :  Setting a reminder for your conference next Wednesday at 7 pm with HR. 
+ action_ask_newevent_time :   What is the date & time? 

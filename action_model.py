@@ -958,6 +958,39 @@ class Glove(DuelRnnCamRest):
             else:
                 labels = ['action_find_place']
         return labels
+    def krvet_keywords(self):
+        return ["set","reminder","near","address","traffic",\
+                "will","if","whether","weather","direction","search","route","schedule"]
+
+    def onehot_for_utters(self,utts):
+
+        kws = self.krvet_keywords()
+        xs = [0] * len(kws)
+        if utts ==[]:
+            return [0] * len(kws)*2
+
+        utts = [u.lower() for u in utts]
+
+        ws = []
+        for u in utts:
+            if not isinstance(u,str):
+                raise TypeError("expected str type utterance but actually {}".format(type(u)))
+            words = nltk.word_tokenize(u)
+            ws.extend(words)
+        for i,w in enumerate(kws):
+            if w in ws:
+                xs[i] = 1
+
+        xs2 = [0] * len(kws)
+        # last utterance
+        ws = nltk.word_tokenize(utts[-1])
+        for i,w in enumerate(kws):
+            if w in ws:
+                xs2[i] = 1
+        return xs + xs2
+
+
+
 
     def prepare_krvet(self):
         from data_loader.loader import load_keret_data
@@ -994,9 +1027,13 @@ class Glove(DuelRnnCamRest):
             Y.append(y_)
             y_indexs.append(y_index)
             last_Ys.append(y_last)
+            for i ,h in enumerate(history):
+                if not isinstance(h,str):
+                    history[i]  =""
             historys.append(history[:-1])
             intent_vecs.append(intent_vec)
-            x_features.append(intent_vec+y_last)
+            keyword_feature =  self.onehot_for_utters(history[:-1])
+            x_features.append(intent_vec+y_last+keyword_feature)
         intent_vecs = np.array(intent_vecs)
         last_Ys = np.array(last_Ys)
         array4utt_his = self.get_utterance(historys)
@@ -1083,7 +1120,7 @@ class Glove(DuelRnnCamRest):
         #if has_intent:
         final_layer_size = 2 * self.hidden_size
         sentence_level_rnn = Dense(final_layer_size)(sentence_level_rnn)
-        x_intent = Input(shape=(3+len(self.kvret_actions()),), name="intent_input")
+        x_intent = Input(shape=(2*len(self.krvet_keywords())+3+len(self.kvret_actions()),), name="feature_input")
         coef = Dense(final_layer_size)(x_intent)
 
         sentence_level_rnn = Lambda(self.product)([coef, sentence_level_rnn])
@@ -1130,7 +1167,8 @@ class Glove(DuelRnnCamRest):
 
     def one_hot(self,value,valueset):
         vec = [0] * len(valueset)
-        vec[valueset.index(value)] = 1
+        if value in valueset:
+            vec[valueset.index(value)] = 1
         vec = np.array(vec)
         return vec
 
@@ -1140,7 +1178,7 @@ class Glove(DuelRnnCamRest):
         intent_vec[["navigate", "schedule", "weather"].index(intent)] = 1
         intent_vec = np.array(intent_vec)
         act_vec = self.one_hot(lastact,self.kvret_actions())
-        cb= intent_vec.tolist()+act_vec.tolist()
+        cb= intent_vec.tolist()+act_vec.tolist()+self.onehot_for_utters(utters[:-1])
         cb = np.array(cb)
         cb = np.expand_dims(cb, 0)
         multi_action_prop_dict = self.predict_one([vec,cb], False)
@@ -1887,16 +1925,16 @@ class HybridDuelRnnModel(DuelRnnCamRest):
 # print(best_action)
 def evaluate():
     g = Glove()
-    g.model_path = "C://model/pretrain_kvret_.h5"
+    g.model_path = "C://model/pretrain_kvret2_.h5"
     g.all_action = g.kvret_actions()
-    X,y ,y_indexs,intents = g.prepare_krvet()
-    Xtrain, Xtest, ytrain, ytest ,intent_train,intent_test= train_test_split(X, y,intents, test_size=0.1,
+    X,y ,y_indexs,intents,last_y,intent_last_act = g.prepare_krvet()
+    Xtrain, Xtest, ytrain, ytest ,intent_train,intent_test= train_test_split(X, y,intent_last_act, test_size=0.1,
                                                      random_state=42)
     g.load_model(g.model_path)
     g.evaluate([Xtest,intent_test],ytest)
 def train():
     g = Glove()
-    g.model_path = "C://model/pretrain_kvret_.h5"
+    g.model_path = "C://model/pretrain_kvret2_.h5"
     g.all_action = g.kvret_actions()
     X,y ,y_indexs,intents,last_y,intent_last_act= g.prepare_krvet()
     g.build_binary_model(False,add_last_action=False)
@@ -1912,8 +1950,8 @@ def train():
     # g.model.fit([Xtrain,intent_train,last_ytrain], ytrain, batch_size=g.batch_size, verbose=2,
     #                epochs=100,
     #                validation_data=([Xtest,intent_test,last_ytest], ytest))
-    g.save(g.model_path+"_lastaction")
-#train()
+    g.save(g.model_path)
+#evaluate()
 
 def function_test():
     utters = ['Whats the two day forecast for new york, does it say it will be hot?']
@@ -1933,11 +1971,12 @@ def function_test():
     i = 0
 def function_test2():
     action_model = Glove()
-    action_model.model_path = "C://model/pretrain_kvret_.h5"
+    action_model.model_path = "C://model/pretrain_kvret2_.h5"
     m = action_model.load_model(action_model.model_path)
+    #print(m.summary())
     # print(m.summary())
-    utters = ["what is the weather going to be like tomorrow show me the 7 day forecast","Seattle"]
-    r = action_model.get_next_action_from_utters_intent_lastact(utters, 'weather',"action_ask_location")
+    utters = ["what is the weather going to be like tomorrow show me the 7 day forecast","What city are you in?","Seattle"]
+    utters = ["Will it humid over the next two days","What city are you in?","Seattle"]
+    r = action_model.get_next_action_from_utters_intent_lastact(utters, 'weather',"action_ask_location",)
     print(r)
-
-function_test2()
+#function_test2()
