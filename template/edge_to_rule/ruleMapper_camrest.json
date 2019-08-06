@@ -1,0 +1,6 @@
+ {
+	"area filled":["area filled"],
+	"food filled":["food filled"],
+	"pricerange filled":["pricerange filled"],
+	"all filled and intent is ask_attribute":["area filled","food filled","pricerange filled","intent is ask_attribute"]
+}

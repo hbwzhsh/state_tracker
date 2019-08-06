@@ -1,0 +1,62 @@
+action_goodbye :  You are welcome,have a wonderful day.
+action_morehelp :  Anything else I can help you with today?
+action_ok :  No problem.
+action_report_distance :  Mandarin Roots is [found_distance] away.
+action_report_address :  The address is [found_address] and there is moderate traffic on the way to the location.
+action_affirm_want_direction :   Would you like directions?
+action_report_traffic :  The current route  have [found_traffic] traffic
+action_set_navigation :  I’ ll send the route with no traffic on your screen, drive carefully!
+action_ask_location :  What city are you in?
+action_check_weather :  The weather in [inform_location] will be snowy on Monday and then on Sunday, cloudy on Tuesday, raining on Wednesday, blizzard on Thursday, lowest temperature on Friday, dry on Saturday
+action_clearify :  The forecast does show show that it will be windy in Manhattan today or tomorrow.
+action_report_event :  Your next football activity is going to be on Thursday at 11 am with your aunt.
+action_set_reminder :  Setting a reminder for your conference next Wednesday at 7 pm with HR.
+action_ask_newevent_time :   What is the time (3pm/4pm/5pm)?
+utter_ask_newevent_time :   What is the time (3pm/4pm/5pm)?
+action_ask_newevent_date :   What is the date (monday/friday/sunday/tomorrow/today)?
+utter_ask_newevent_date :   What is the date (monday/friday/sunday/tomorrow/today)?
+utter_ask_event:What is the activity?
+utter_name:Hey there! Tell me your name.
+utter_greet:Nice to you meet you [name]. How can I help?
+utter_goodbye:Talk to you later!
+utter_thanks:My pleasure.
+utter_offer_help:Anything  I can help you with today?
+utter_ask_rent_location:Where are you gonna live?
+utter_ask_rent_date:When are you gonna live?
+utter_ask_number:Can I know your phone number ,then someone that help  will contact you?
+utter_finish_rent_house:ok all the information collected below,thank you for your trust.[name]is  insterested in the apartment around [location],move in on [date],
+utter_got_that:got it.
+utter_one_step:one more step.
+utter_ask_name:May i know your name?
+utter_final_step:Final step.
+utter_confirm_more_order:Anything else to order?(hamburger/Apple Pie/cheeseburger/chicken wings)
+utter_confirm_drink:Do you want any drink?(Hot Chocolate/Chocolate Shake/Strawberry Shake/Vanilla Shake)
+utter_confirm_order_finish:Do you finish your order?
+utter_summary_order:ok all the information collected below,thank you for your trust.you have ordered the these foods [food],and drink [drink],
+utter_ask_coursename:What course are you insterested in ?English or French?
+utter_finish_book_course:ok all the info collected below.your ([name]) phone number is [number] ,want to learn [coursename] and our advisor will contact you.
+utter_list_size:We have 32inch,34inch and 42inch TV.
+utter_ask_size:Which size do you want to buy?
+utter_receive_size:You want to buy [size] tv.
+utter_ask_resolution:Do you prefer 1080p,4k or 8k?
+utter_receive_resolution:You want to buy [resolution] tv.
+utter_list_brand:We have got MI ,Hisense and TCL and SONY.
+utter_list_brandname:We have got MI ,Hisense and TCL and SONY.
+utter_ask_brand:Which brand do you prefer?
+utter_ask_brandname:Which brand do you prefer?
+utter_receive_brand:You want to buy [brandname] tv.
+utter_tv_summary:You want to buy [brandname] TV with [resolution] resolution and [size] screen.
+utter_send_tv_order:I am sending your order.
+utter_confirm:Thank for your coopearation,goodbye.
+utter_thank:Thank you for your trust.
+utter_goodbye:Have a nice day.Goodbye.
+utter_ask_weather_city:What city are you interested in(e.g. Shenzhen/Hangzhou/Beijing)?
+utter_ask_weather_date:What date are you interested in(e.g. monday/friday/sunday/tomorrow/today)?
+utter_ask_area:What area did you have in mind(south/north/middle of the town)?
+utter_ask_food:Do you have a cuisine preference?(e.g. chinese/british)
+utter_ask_pricerange:What price range did you have in mind?(e.g. expensive/cheap/moderate)
+utter_answer_number:Their {} phone number is {}
+utter_answer_address: {} is located at {}
+utter_answer_postcode:The post code of {} is  {}
+
+

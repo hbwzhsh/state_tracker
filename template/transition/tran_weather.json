@@ -1,0 +1,19 @@
+{
+	"transitions":[
+        {"trigger": "1what q - not date", "source": "start", "dest": "1ask date"},
+        {"trigger": "1what q - fill all", "source": "start", "dest":"1all filled"},
+        {"trigger": "1fill all", "source": "1ask date", "dest": "1all filled"},
+        {"trigger": "1not location", "source": "1ask date", "dest": "1ask location"},
+        {"trigger": "1not date", "source": "1ask location", "dest": "1ask date"},
+        {"trigger": "1fill all", "source": "1ask location", "dest": "1all filled"},
+        {"trigger": "1what q - not location", "source": "start", "dest": "1ask location"},
+        {"trigger": "2is q - not date", "source": "start", "dest": "2ask date"},
+        {"trigger": "2is q - not location", "source": "start", "dest": "2ask location"},
+        {"trigger": "2fill all", "source": "2ask date", "dest": "2all filled"},
+        {"trigger": "2fill all", "source": "2ask location", "dest": "2all filled"},
+        {"trigger": "is q - fill all", "source": "start", "dest": "2all filled"},
+        {"trigger": "2not location", "source": "2ask date", "dest": "2ask location"},
+        {"trigger": "2not date", "source": "2ask location", "dest": "2ask date"}
+
+    ]
+}

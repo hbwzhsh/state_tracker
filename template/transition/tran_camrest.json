@@ -1,0 +1,9 @@
+{
+	"transitions":[
+	{"trigger": "area filled", "source": "state_ask_area", "dest": "state_ask_food"},
+	{"trigger": "food filled", "source": "state_ask_food", "dest": "state_ask_pricerange"},
+	{"trigger": "pricerange filled", "source": "state_ask_pricerange", "dest": "state_filled_pricerange"},
+	{"trigger": "all filled and intent is ask_attribute", "source": "state_filled_pricerange", "dest": "state_ask_attribute"},
+	{"trigger": "all filled and intent is ask_attribute", "source": "state_ask_attribute", "dest": "state_ask_attribute"}
+	]
+}

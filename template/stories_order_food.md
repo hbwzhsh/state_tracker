@@ -1,0 +1,19 @@
+## story_order_food
+* order_food
+ - utter_confirm_more_order
+* order_food
+ - utter_confirm_drink
+* order_drink
+ - utter_confirm_order_finish
+* affirm
+ - utter_summary_order
+
+## story_order_food02
+* order_food
+ - utter_confirm_more_order
+* order_food
+ - utter_confirm_drink
+* negation
+ - utter_confirm_order_finish
+* affirm
+ - utter_summary_order

@@ -1,0 +1,7 @@
+{
+	"state_ask_area":["utter_ask_area"],
+	"state_ask_food":["utter_ask_food","action_show_rest"],
+	"state_ask_pricerange":["utter_ask_pricerange","action_show_rest"],
+	"state_filled_pricerange":["action_show_rest"],
+	"state_ask_attribute":["action_answer_attribute"]
+}

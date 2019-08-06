@@ -1,0 +1,8 @@
+{
+        "1all filled":["action_check_weather"],
+        "2all filled":["action_clearify"],
+        "1ask date":["utter_ask_weather_date"],
+        "2ask date":["utter_ask_weather_date"],
+        "1ask location":["utter_ask_weather_city"],
+        "2ask location":["utter_ask_weather_city"]
+     }

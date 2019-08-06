@@ -1,0 +1,25 @@
+## story_rent_house
+* rent_house
+ - utter_ask_rent_location
+* inform_rent_location
+ - utter_ask_rent_date
+* inform_rent_date
+ - utter_ask_name
+* inform_name
+ - utter_ask_number
+* inform_number
+ - utter_finish_rent_house
+
+## story_rent_house
+* greet
+ - utter_offer_help
+* rent_house
+ - utter_ask_rent_location
+* inform_rent_location
+ - utter_ask_rent_date
+* inform_rent_date
+ - utter_ask_name
+* inform_name
+ - utter_ask_number
+* inform_number
+ - utter_finish_rent_house

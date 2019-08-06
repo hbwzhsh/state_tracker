@@ -1,0 +1,13 @@
+{
+        "1what q - not date": ["intent is ask_how_weather","date unfilled"],
+        "1not location": ["location unfilled"],
+        "2not location": ["location unfilled"],
+        "1not date": ["date unfilled"],
+        "2not date": ["date unfilled"],
+        "1what q - fill all": ["intent is ask_how_weather","date filled","location filled"],
+        "1fill all": ["date filled","location filled"],
+        "1what q - not location": ["intent is ask_how_weather","location unfilled"],
+        "2is q - not date": ["intent is ask_is_weather","date unfilled"],
+        "2is q - not location": ["intent is ask_is_weather","location unfilled"],
+        "2fill all": ["date filled","location filled"],
+        "2what q - fill all": ["intent is ask_is_weather","date filled","location filled"]}

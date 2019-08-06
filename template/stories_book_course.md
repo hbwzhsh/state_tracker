@@ -1,0 +1,9 @@
+## story_book_course
+* book_course
+ - utter_ask_name
+* inform_name
+ - utter_ask_coursename
+* inform_coursename
+ - utter_ask_number
+* inform_number
+ - utter_finish_book_course

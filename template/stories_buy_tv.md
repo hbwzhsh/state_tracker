@@ -1,0 +1,28 @@
+## story_buy_tv2
+* greet
+ - utter_ask_resolution
+* inform_resolution
+ - utter_list_brand
+ - utter_ask_brand
+* inform_brand
+ - utter_tv_summary
+ - utter_confirm
+* affirm
+ - utter_thank
+ - utter_goodbye
+ 
+## story_buy_tv
+* buy_tv
+ - utter_list_size
+ - utter_ask_size
+* inform_size
+ - utter_receive_size
+ - utter_ask_resolution
+* inform_resolution
+ - utter_receive_resolution
+ - utter_list_brand
+ - utter_ask_brand
+* inform_brand
+ - utter_receive_brand
+ - utter_tv_summary
+ - utter_send_tv_order
