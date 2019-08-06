@@ -1,0 +1,2 @@
+model_checkpoint_path: "C:\\state_starker\\model\\./slot_filling/default\\all\\component_5_EmbeddingIntentClassifier.ckpt"
+all_model_checkpoint_paths: "C:\\state_starker\\model\\./slot_filling/default\\all\\component_5_EmbeddingIntentClassifier.ckpt"

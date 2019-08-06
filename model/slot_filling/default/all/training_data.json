@@ -1,0 +1,2281 @@
+{
+  "rasa_nlu_data": {
+    "common_examples": [
+      {
+        "intent": "goodbye",
+        "text": "Bye"
+      },
+      {
+        "intent": "goodbye",
+        "text": "Goodbye"
+      },
+      {
+        "intent": "goodbye",
+        "text": "See you later"
+      },
+      {
+        "intent": "goodbye",
+        "text": "Bye bot"
+      },
+      {
+        "intent": "goodbye",
+        "text": "Goodbye friend"
+      },
+      {
+        "intent": "goodbye",
+        "text": "bye"
+      },
+      {
+        "intent": "goodbye",
+        "text": "bye for now"
+      },
+      {
+        "intent": "goodbye",
+        "text": "catch you later"
+      },
+      {
+        "intent": "goodbye",
+        "text": "gotta go"
+      },
+      {
+        "intent": "goodbye",
+        "text": "See you"
+      },
+      {
+        "intent": "goodbye",
+        "text": "goodnight"
+      },
+      {
+        "intent": "goodbye",
+        "text": "have a nice day"
+      },
+      {
+        "intent": "goodbye",
+        "text": "i'm off"
+      },
+      {
+        "intent": "goodbye",
+        "text": "see you later alligator"
+      },
+      {
+        "intent": "goodbye",
+        "text": "we'll speak soon"
+      },
+      {
+        "intent": "greet",
+        "text": "Hi"
+      },
+      {
+        "intent": "greet",
+        "text": "Hey"
+      },
+      {
+        "intent": "greet",
+        "text": "Hi bot"
+      },
+      {
+        "intent": "greet",
+        "text": "Hey bot"
+      },
+      {
+        "intent": "greet",
+        "text": "Hello"
+      },
+      {
+        "intent": "greet",
+        "text": "Good morning"
+      },
+      {
+        "intent": "greet",
+        "text": "hi again"
+      },
+      {
+        "intent": "greet",
+        "text": "hi folks"
+      },
+      {
+        "intent": "greet",
+        "text": "hi Mister"
+      },
+      {
+        "intent": "greet",
+        "text": "hi pal!"
+      },
+      {
+        "intent": "greet",
+        "text": "hi there"
+      },
+      {
+        "intent": "greet",
+        "text": "greetings"
+      },
+      {
+        "intent": "greet",
+        "text": "hello everybody"
+      },
+      {
+        "intent": "greet",
+        "text": "hello is anybody there"
+      },
+      {
+        "intent": "greet",
+        "text": "hello robot"
+      },
+      {
+        "intent": "thanks",
+        "text": "Thanks"
+      },
+      {
+        "intent": "thanks",
+        "text": "Thank you"
+      },
+      {
+        "intent": "thanks",
+        "text": "Thank you so much"
+      },
+      {
+        "intent": "thanks",
+        "text": "Thanks bot"
+      },
+      {
+        "intent": "thanks",
+        "text": "Thanks for that"
+      },
+      {
+        "intent": "thanks",
+        "text": "cheers"
+      },
+      {
+        "intent": "thanks",
+        "text": "cheers bro"
+      },
+      {
+        "intent": "thanks",
+        "text": "ok thanks!"
+      },
+      {
+        "intent": "thanks",
+        "text": "perfect thank you"
+      },
+      {
+        "intent": "thanks",
+        "text": "thanks a bunch for everything"
+      },
+      {
+        "intent": "thanks",
+        "text": "thanks for the help"
+      },
+      {
+        "intent": "thanks",
+        "text": "thanks a lot"
+      },
+      {
+        "intent": "thanks",
+        "text": "amazing, thanks"
+      },
+      {
+        "intent": "thanks",
+        "text": "cool, thanks"
+      },
+      {
+        "intent": "thanks",
+        "text": "cool thank you"
+      },
+      {
+        "intent": "affirm",
+        "text": "yes"
+      },
+      {
+        "intent": "affirm",
+        "text": "yes sure"
+      },
+      {
+        "intent": "affirm",
+        "text": "absolutely"
+      },
+      {
+        "intent": "affirm",
+        "text": "for sure"
+      },
+      {
+        "intent": "affirm",
+        "text": "yes yes yes"
+      },
+      {
+        "intent": "affirm",
+        "text": "definitely"
+      },
+      {
+        "intent": "intent1",
+        "entities": [
+          {
+            "start": 11,
+            "end": 14,
+            "value": "Tom",
+            "entity": "name"
+          }
+        ],
+        "text": "My name is Tom"
+      },
+      {
+        "intent": "intent1",
+        "entities": [
+          {
+            "start": 5,
+            "end": 8,
+            "value": "Tom",
+            "entity": "name"
+          }
+        ],
+        "text": "I am Tom"
+      },
+      {
+        "intent": "intent1",
+        "entities": [
+          {
+            "start": 23,
+            "end": 26,
+            "value": "Tom",
+            "entity": "name"
+          }
+        ],
+        "text": "Usually people call me Tom"
+      },
+      {
+        "intent": "intent1",
+        "entities": [
+          {
+            "start": 11,
+            "end": 14,
+            "value": "Tom",
+            "entity": "name"
+          }
+        ],
+        "text": "My name is Tom"
+      },
+      {
+        "intent": "intent1",
+        "entities": [
+          {
+            "start": 16,
+            "end": 19,
+            "value": "Tom",
+            "entity": "name"
+          }
+        ],
+        "text": "You can call me Tom"
+      },
+      {
+        "intent": "intent1",
+        "entities": [
+          {
+            "start": 15,
+            "end": 18,
+            "value": "Tom",
+            "entity": "name"
+          }
+        ],
+        "text": "Please call me Tom"
+      },
+      {
+        "intent": "intent1",
+        "entities": [
+          {
+            "start": 8,
+            "end": 11,
+            "value": "Tom",
+            "entity": "name"
+          }
+        ],
+        "text": "name is Tom"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 11,
+            "end": 16,
+            "value": "Juste",
+            "entity": "name"
+          }
+        ],
+        "text": "My name is Juste"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 5,
+            "end": 9,
+            "value": "Josh",
+            "entity": "name"
+          }
+        ],
+        "text": "I am Josh"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 4,
+            "end": 8,
+            "value": "Lucy",
+            "entity": "name"
+          }
+        ],
+        "text": "I'm Lucy"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 15,
+            "end": 19,
+            "value": "Greg",
+            "entity": "name"
+          }
+        ],
+        "text": "People call me Greg"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 5,
+            "end": 10,
+            "value": "David",
+            "entity": "name"
+          }
+        ],
+        "text": "It's David"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 23,
+            "end": 26,
+            "value": "Amy",
+            "entity": "name"
+          }
+        ],
+        "text": "Usually people call me Amy"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 11,
+            "end": 15,
+            "value": "John",
+            "entity": "name"
+          }
+        ],
+        "text": "My name is John"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 16,
+            "end": 19,
+            "value": "Sam",
+            "entity": "name"
+          }
+        ],
+        "text": "You can call me Sam"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 15,
+            "end": 20,
+            "value": "Linda",
+            "entity": "name"
+          }
+        ],
+        "text": "Please call me Linda"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 13,
+            "end": 16,
+            "value": "Tom",
+            "entity": "name"
+          }
+        ],
+        "text": "Name name is Tom"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 5,
+            "end": 12,
+            "value": "Richard",
+            "entity": "name"
+          }
+        ],
+        "text": "I am Richard"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 4,
+            "end": 9,
+            "value": "Tracy",
+            "entity": "name"
+          }
+        ],
+        "text": "I'm Tracy"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 8,
+            "end": 13,
+            "value": "Sally",
+            "entity": "name"
+          }
+        ],
+        "text": "Call me Sally"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 5,
+            "end": 12,
+            "value": "Philipp",
+            "entity": "name"
+          }
+        ],
+        "text": "I am Philipp"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 5,
+            "end": 12,
+            "value": "Charlie",
+            "entity": "name"
+          }
+        ],
+        "text": "I am Charlie"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 5,
+            "end": 12,
+            "value": "Charlie",
+            "entity": "name"
+          }
+        ],
+        "text": "I am Charlie"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 5,
+            "end": 8,
+            "value": "Ben",
+            "entity": "name"
+          }
+        ],
+        "text": "I am Ben"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 8,
+            "end": 13,
+            "value": "Susan",
+            "entity": "name"
+          }
+        ],
+        "text": "Call me Susan"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 0,
+            "end": 4,
+            "value": "Lucy",
+            "entity": "name"
+          }
+        ],
+        "text": "Lucy"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 0,
+            "end": 5,
+            "value": "Peter",
+            "entity": "name"
+          }
+        ],
+        "text": "Peter"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 0,
+            "end": 4,
+            "value": "Mark",
+            "entity": "name"
+          }
+        ],
+        "text": "Mark"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 0,
+            "end": 6,
+            "value": "Joseph",
+            "entity": "name"
+          }
+        ],
+        "text": "Joseph"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 0,
+            "end": 3,
+            "value": "Tan",
+            "entity": "name"
+          }
+        ],
+        "text": "Tan"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 0,
+            "end": 4,
+            "value": "Pete",
+            "entity": "name"
+          }
+        ],
+        "text": "Pete"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 0,
+            "end": 4,
+            "value": "Elon",
+            "entity": "name"
+          }
+        ],
+        "text": "Elon"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 0,
+            "end": 5,
+            "value": "Penny",
+            "entity": "name"
+          }
+        ],
+        "text": "Penny"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 8,
+            "end": 14,
+            "value": "Andrew",
+            "entity": "name"
+          }
+        ],
+        "text": "name is Andrew"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 2,
+            "end": 6,
+            "value": "Lora",
+            "entity": "name"
+          }
+        ],
+        "text": "I Lora"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 0,
+            "end": 4,
+            "value": "Stan",
+            "entity": "name"
+          }
+        ],
+        "text": "Stan is my name"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 0,
+            "end": 5,
+            "value": "Susan",
+            "entity": "name"
+          }
+        ],
+        "text": "Susan is the name"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 0,
+            "end": 4,
+            "value": "Ross",
+            "entity": "name"
+          }
+        ],
+        "text": "Ross is my first name"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 0,
+            "end": 4,
+            "value": "Bing",
+            "entity": "name"
+          }
+        ],
+        "text": "Bing is my last name"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 15,
+            "end": 23,
+            "value": "Angelina",
+            "entity": "name"
+          }
+        ],
+        "text": "Few call me as Angelina"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 13,
+            "end": 18,
+            "value": "Julia",
+            "entity": "name"
+          }
+        ],
+        "text": "Some call me Julia"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 18,
+            "end": 23,
+            "value": "Laura",
+            "entity": "name"
+          }
+        ],
+        "text": "Everyone calls me Laura"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 5,
+            "end": 11,
+            "value": "Ganesh",
+            "entity": "name"
+          }
+        ],
+        "text": "I am Ganesh"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 11,
+            "end": 15,
+            "value": "Mike",
+            "entity": "name"
+          }
+        ],
+        "text": "My name is Mike"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 13,
+            "end": 19,
+            "value": "Monika",
+            "entity": "name"
+          }
+        ],
+        "text": "just call me Monika"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 9,
+            "end": 12,
+            "value": "Dan",
+            "entity": "name"
+          }
+        ],
+        "text": "Few call Dan"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 23,
+            "end": 28,
+            "value": "Suraj",
+            "entity": "name"
+          }
+        ],
+        "text": "You can always call me Suraj"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 18,
+            "end": 24,
+            "value": "Andrew",
+            "entity": "name"
+          }
+        ],
+        "text": "Some will call me Andrew"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 11,
+            "end": 15,
+            "value": "Ajay",
+            "entity": "name"
+          }
+        ],
+        "text": "My name is Ajay"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 7,
+            "end": 11,
+            "value": "Ding",
+            "entity": "name"
+          }
+        ],
+        "text": "I call Ding"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 4,
+            "end": 10,
+            "value": "Partia",
+            "entity": "name"
+          }
+        ],
+        "text": "I'm Partia"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 15,
+            "end": 18,
+            "value": "Leo",
+            "entity": "name"
+          }
+        ],
+        "text": "Please call me Leo"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 8,
+            "end": 12,
+            "value": "Pari",
+            "entity": "name"
+          }
+        ],
+        "text": "name is Pari"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 5,
+            "end": 11,
+            "value": "Sanjay",
+            "entity": "name"
+          }
+        ],
+        "text": "name Sanjay"
+      },
+      {
+        "intent": "inform_name",
+        "entities": [
+          {
+            "start": 12,
+            "end": 20,
+            "value": "xuyuhang",
+            "entity": "name"
+          }
+        ],
+        "text": "my name is  xuyuhang"
+      },
+      {
+        "intent": "joke",
+        "text": "Can you tell me a joke?"
+      },
+      {
+        "intent": "joke",
+        "text": "I would like to hear a joke"
+      },
+      {
+        "intent": "joke",
+        "text": "Tell me a joke"
+      },
+      {
+        "intent": "joke",
+        "text": "A joke please"
+      },
+      {
+        "intent": "joke",
+        "text": "Tell me a joke please"
+      },
+      {
+        "intent": "joke",
+        "text": "I would like to hear a joke"
+      },
+      {
+        "intent": "joke",
+        "text": "I would loke to hear a joke, please"
+      },
+      {
+        "intent": "joke",
+        "text": "Can you tell jokes?"
+      },
+      {
+        "intent": "joke",
+        "text": "Please tell me a joke"
+      },
+      {
+        "intent": "joke",
+        "text": "I need to hear a joke"
+      },
+      {
+        "intent": "rent_house",
+        "text": "can you help me find a apartment please"
+      },
+      {
+        "intent": "rent_house",
+        "text": "help me find an apartment"
+      },
+      {
+        "intent": "rent_house",
+        "text": "find a apartment to live"
+      },
+      {
+        "intent": "rent_house",
+        "text": "where can i get a apartment"
+      },
+      {
+        "intent": "rent_house",
+        "text": "i want to move to a new place"
+      },
+      {
+        "intent": "inform_rent_location",
+        "entities": [
+          {
+            "start": 0,
+            "end": 7,
+            "value": "nanshan",
+            "entity": "location"
+          }
+        ],
+        "text": "nanshan"
+      },
+      {
+        "intent": "inform_rent_location",
+        "entities": [
+          {
+            "start": 0,
+            "end": 5,
+            "value": "baoan",
+            "entity": "location"
+          }
+        ],
+        "text": "baoan"
+      },
+      {
+        "intent": "inform_rent_location",
+        "entities": [
+          {
+            "start": 0,
+            "end": 5,
+            "value": "luohu",
+            "entity": "location"
+          }
+        ],
+        "text": "luohu"
+      },
+      {
+        "intent": "inform_rent_location",
+        "entities": [
+          {
+            "start": 8,
+            "end": 15,
+            "value": "nanshan",
+            "entity": "location"
+          }
+        ],
+        "text": "live in nanshan"
+      },
+      {
+        "intent": "inform_rent_location",
+        "entities": [
+          {
+            "start": 8,
+            "end": 13,
+            "value": "baoan",
+            "entity": "location"
+          }
+        ],
+        "text": "live in baoan"
+      },
+      {
+        "intent": "inform_rent_location",
+        "entities": [
+          {
+            "start": 8,
+            "end": 13,
+            "value": "luohu",
+            "entity": "location"
+          }
+        ],
+        "text": "live in luohu"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 0,
+            "end": 7,
+            "value": "January",
+            "entity": "month"
+          }
+        ],
+        "text": "January"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 0,
+            "end": 8,
+            "value": "February",
+            "entity": "month"
+          }
+        ],
+        "text": "February"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 0,
+            "end": 5,
+            "value": "March",
+            "entity": "month"
+          }
+        ],
+        "text": "March"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 0,
+            "end": 5,
+            "value": "April",
+            "entity": "month"
+          }
+        ],
+        "text": "April"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 0,
+            "end": 3,
+            "value": "May",
+            "entity": "month"
+          }
+        ],
+        "text": "May"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 0,
+            "end": 4,
+            "value": "June",
+            "entity": "month"
+          }
+        ],
+        "text": "June"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 0,
+            "end": 4,
+            "value": "July",
+            "entity": "month"
+          }
+        ],
+        "text": "July"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 0,
+            "end": 6,
+            "value": "August",
+            "entity": "month"
+          }
+        ],
+        "text": "August"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 0,
+            "end": 9,
+            "value": "September",
+            "entity": "month"
+          }
+        ],
+        "text": "September"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 0,
+            "end": 7,
+            "value": "October",
+            "entity": "month"
+          }
+        ],
+        "text": "October"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 0,
+            "end": 9,
+            "value": "Novemeber",
+            "entity": "month"
+          }
+        ],
+        "text": "Novemeber"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 0,
+            "end": 8,
+            "value": "December",
+            "entity": "month"
+          }
+        ],
+        "text": "December"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 5,
+            "end": 11,
+            "value": "monday",
+            "entity": "date"
+          }
+        ],
+        "text": "this monday"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 4,
+            "end": 11,
+            "value": "tuesday",
+            "entity": "date"
+          }
+        ],
+        "text": "thistuesday"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 4,
+            "end": 13,
+            "value": "wednesday",
+            "entity": "date"
+          }
+        ],
+        "text": "thiswednesday"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 4,
+            "end": 12,
+            "value": "thursday",
+            "entity": "date"
+          }
+        ],
+        "text": "thisthursday"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 4,
+            "end": 10,
+            "value": "friday",
+            "entity": "date"
+          }
+        ],
+        "text": "nextfriday"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 4,
+            "end": 12,
+            "value": "saturday",
+            "entity": "date"
+          }
+        ],
+        "text": "nextsaturday"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 4,
+            "end": 10,
+            "value": "sunday",
+            "entity": "date"
+          }
+        ],
+        "text": "nextsunday"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 0,
+            "end": 6,
+            "value": "monday",
+            "entity": "date"
+          }
+        ],
+        "text": "monday"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 0,
+            "end": 7,
+            "value": "tuesday",
+            "entity": "date"
+          }
+        ],
+        "text": "tuesday"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 0,
+            "end": 9,
+            "value": "wednesday",
+            "entity": "date"
+          }
+        ],
+        "text": "wednesday"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 0,
+            "end": 8,
+            "value": "thursday",
+            "entity": "date"
+          }
+        ],
+        "text": "thursday"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 0,
+            "end": 6,
+            "value": "friday",
+            "entity": "date"
+          }
+        ],
+        "text": "friday"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 0,
+            "end": 8,
+            "value": "saturday",
+            "entity": "date"
+          }
+        ],
+        "text": "saturday"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 0,
+            "end": 6,
+            "value": "sunday",
+            "entity": "date"
+          }
+        ],
+        "text": "sunday"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 0,
+            "end": 7,
+            "value": "the 1st",
+            "entity": "date"
+          }
+        ],
+        "text": "the 1st"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 0,
+            "end": 7,
+            "value": "the 2nd",
+            "entity": "date"
+          }
+        ],
+        "text": "the 2nd"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 0,
+            "end": 7,
+            "value": "the 3rd",
+            "entity": "date"
+          }
+        ],
+        "text": "the 3rd"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 0,
+            "end": 7,
+            "value": "the 4th",
+            "entity": "date"
+          }
+        ],
+        "text": "the 4th"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 0,
+            "end": 7,
+            "value": "the 5th",
+            "entity": "date"
+          }
+        ],
+        "text": "the 5th"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 0,
+            "end": 7,
+            "value": "the 6th",
+            "entity": "date"
+          }
+        ],
+        "text": "the 6th"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 0,
+            "end": 7,
+            "value": "the 7th",
+            "entity": "date"
+          }
+        ],
+        "text": "the 7th"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 0,
+            "end": 7,
+            "value": "the 8th",
+            "entity": "date"
+          }
+        ],
+        "text": "the 8th"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 0,
+            "end": 7,
+            "value": "the 9th",
+            "entity": "date"
+          }
+        ],
+        "text": "the 9th"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 0,
+            "end": 8,
+            "value": "the 10th",
+            "entity": "date"
+          }
+        ],
+        "text": "the 10th"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 0,
+            "end": 8,
+            "value": "the 11th",
+            "entity": "date"
+          }
+        ],
+        "text": "the 11th"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 0,
+            "end": 8,
+            "value": "the 12th",
+            "entity": "date"
+          }
+        ],
+        "text": "the 12th"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 0,
+            "end": 8,
+            "value": "the 13th",
+            "entity": "date"
+          }
+        ],
+        "text": "the 13th"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 0,
+            "end": 8,
+            "value": "the 14th",
+            "entity": "date"
+          }
+        ],
+        "text": "the 14th"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 0,
+            "end": 8,
+            "value": "the 15th",
+            "entity": "date"
+          }
+        ],
+        "text": "the 15th"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 0,
+            "end": 8,
+            "value": "the 16th",
+            "entity": "date"
+          }
+        ],
+        "text": "the 16th"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 0,
+            "end": 8,
+            "value": "the 17th",
+            "entity": "date"
+          }
+        ],
+        "text": "the 17th"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 0,
+            "end": 8,
+            "value": "the 18th",
+            "entity": "date"
+          }
+        ],
+        "text": "the 18th"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 0,
+            "end": 8,
+            "value": "the 19th",
+            "entity": "date"
+          }
+        ],
+        "text": "the 19th"
+      },
+      {
+        "intent": "inform_rent_date",
+        "entities": [
+          {
+            "start": 0,
+            "end": 8,
+            "value": "the 20th",
+            "entity": "date"
+          }
+        ],
+        "text": "the 20th"
+      },
+      {
+        "intent": "inform_number",
+        "entities": [
+          {
+            "start": 13,
+            "end": 16,
+            "value": "123",
+            "entity": "number"
+          }
+        ],
+        "text": "my number is 123"
+      },
+      {
+        "intent": "inform_number",
+        "entities": [
+          {
+            "start": 17,
+            "end": 20,
+            "value": "123",
+            "entity": "number"
+          }
+        ],
+        "text": "mobile number is 123"
+      },
+      {
+        "intent": "inform_number",
+        "entities": [
+          {
+            "start": 14,
+            "end": 17,
+            "value": "123",
+            "entity": "number"
+          }
+        ],
+        "text": "the number is 123"
+      },
+      {
+        "intent": "inform_number",
+        "entities": [
+          {
+            "start": 6,
+            "end": 9,
+            "value": "123",
+            "entity": "number"
+          }
+        ],
+        "text": "it is 123"
+      },
+      {
+        "intent": "inform_number",
+        "entities": [
+          {
+            "start": 0,
+            "end": 3,
+            "value": "123",
+            "entity": "number"
+          }
+        ],
+        "text": "123"
+      },
+      {
+        "intent": "negation",
+        "text": "no"
+      },
+      {
+        "intent": "negation",
+        "text": "i dont want it"
+      },
+      {
+        "intent": "negation",
+        "text": "nope"
+      },
+      {
+        "intent": "order_food",
+        "entities": [
+          {
+            "start": 7,
+            "end": 16,
+            "value": "hamburger",
+            "entity": "food"
+          }
+        ],
+        "text": "i want hamburger"
+      },
+      {
+        "intent": "order_food",
+        "entities": [
+          {
+            "start": 7,
+            "end": 19,
+            "value": "cheeseburger",
+            "entity": "food"
+          }
+        ],
+        "text": "i want cheeseburger"
+      },
+      {
+        "intent": "order_food",
+        "entities": [
+          {
+            "start": 7,
+            "end": 14,
+            "value": "Big Mac",
+            "entity": "food"
+          }
+        ],
+        "text": "i want Big Mac"
+      },
+      {
+        "intent": "order_food",
+        "entities": [
+          {
+            "start": 7,
+            "end": 25,
+            "value": "McChicken Sandwich",
+            "entity": "food"
+          }
+        ],
+        "text": "i want McChicken Sandwich"
+      },
+      {
+        "intent": "order_food",
+        "entities": [
+          {
+            "start": 22,
+            "end": 35,
+            "value": "chicken wings",
+            "entity": "food"
+          }
+        ],
+        "text": "i would like to order chicken wings"
+      },
+      {
+        "intent": "order_food",
+        "entities": [
+          {
+            "start": 22,
+            "end": 34,
+            "value": "French Fries",
+            "entity": "food"
+          }
+        ],
+        "text": "i would like to order French Fries"
+      },
+      {
+        "intent": "order_food",
+        "entities": [
+          {
+            "start": 22,
+            "end": 27,
+            "value": "Fries",
+            "entity": "food"
+          }
+        ],
+        "text": "i would like to order Fries"
+      },
+      {
+        "intent": "order_food",
+        "entities": [
+          {
+            "start": 15,
+            "end": 24,
+            "value": "Apple Pie",
+            "entity": "food"
+          }
+        ],
+        "text": "i want to have Apple Pie"
+      },
+      {
+        "intent": "order_food",
+        "entities": [
+          {
+            "start": 22,
+            "end": 31,
+            "value": "Apple Pie",
+            "entity": "food"
+          }
+        ],
+        "text": "i would like  to have Apple Pie"
+      },
+      {
+        "intent": "order_food",
+        "entities": [
+          {
+            "start": 23,
+            "end": 32,
+            "value": "Apple Pie",
+            "entity": "food"
+          }
+        ],
+        "text": "i would like  to order Apple Pie"
+      },
+      {
+        "intent": "order_food",
+        "entities": [
+          {
+            "start": 12,
+            "end": 21,
+            "value": "Apple Pie",
+            "entity": "food"
+          }
+        ],
+        "text": "Can I order Apple Pie"
+      },
+      {
+        "intent": "order_food",
+        "entities": [
+          {
+            "start": 11,
+            "end": 20,
+            "value": "Apple Pie",
+            "entity": "food"
+          }
+        ],
+        "text": "Can I have Apple Pie"
+      },
+      {
+        "intent": "order_food",
+        "entities": [
+          {
+            "start": 11,
+            "end": 18,
+            "value": "Big Mac",
+            "entity": "food"
+          }
+        ],
+        "text": "Can I have Big Mac"
+      },
+      {
+        "intent": "order_food",
+        "entities": [
+          {
+            "start": 12,
+            "end": 19,
+            "value": "Big Mac",
+            "entity": "food"
+          }
+        ],
+        "text": "Can I order Big Mac"
+      },
+      {
+        "intent": "order_food",
+        "entities": [
+          {
+            "start": 11,
+            "end": 20,
+            "value": "hamburger",
+            "entity": "food"
+          }
+        ],
+        "text": "Can I have hamburger"
+      },
+      {
+        "intent": "order_food",
+        "entities": [
+          {
+            "start": 12,
+            "end": 21,
+            "value": "hamburger",
+            "entity": "food"
+          }
+        ],
+        "text": "Can I order hamburger"
+      },
+      {
+        "intent": "order_food",
+        "entities": [
+          {
+            "start": 12,
+            "end": 24,
+            "value": "cheeseburger",
+            "entity": "food"
+          }
+        ],
+        "text": "Can I order cheeseburger"
+      },
+      {
+        "intent": "order_food",
+        "entities": [
+          {
+            "start": 11,
+            "end": 23,
+            "value": "cheeseburger",
+            "entity": "food"
+          }
+        ],
+        "text": "Can I have cheeseburger"
+      },
+      {
+        "intent": "order_drink",
+        "entities": [
+          {
+            "start": 7,
+            "end": 14,
+            "value": "Hot Tea",
+            "entity": "drink"
+          }
+        ],
+        "text": "i want Hot Tea"
+      },
+      {
+        "intent": "order_drink",
+        "entities": [
+          {
+            "start": 7,
+            "end": 20,
+            "value": "Hot Chocolate",
+            "entity": "drink"
+          }
+        ],
+        "text": "i want Hot Chocolate"
+      },
+      {
+        "intent": "order_drink",
+        "entities": [
+          {
+            "start": 22,
+            "end": 37,
+            "value": "Chocolate Shake",
+            "entity": "drink"
+          }
+        ],
+        "text": "i would like to order Chocolate Shake"
+      },
+      {
+        "intent": "order_drink",
+        "entities": [
+          {
+            "start": 22,
+            "end": 38,
+            "value": "Strawberry Shake",
+            "entity": "drink"
+          }
+        ],
+        "text": "i would like to order Strawberry Shake"
+      },
+      {
+        "intent": "order_drink",
+        "entities": [
+          {
+            "start": 22,
+            "end": 35,
+            "value": "Vanilla Shake",
+            "entity": "drink"
+          }
+        ],
+        "text": "i would like to order Vanilla Shake"
+      },
+      {
+        "intent": "inform_coursename",
+        "entities": [
+          {
+            "start": 16,
+            "end": 23,
+            "value": "English",
+            "entity": "coursename"
+          }
+        ],
+        "text": "I want to study English"
+      },
+      {
+        "intent": "inform_coursename",
+        "entities": [
+          {
+            "start": 34,
+            "end": 41,
+            "value": "English",
+            "entity": "coursename"
+          }
+        ],
+        "text": "Can I get some information about  English course?"
+      },
+      {
+        "intent": "inform_coursename",
+        "entities": [
+          {
+            "start": 16,
+            "end": 22,
+            "value": "French",
+            "entity": "coursename"
+          }
+        ],
+        "text": "I want to study French"
+      },
+      {
+        "intent": "inform_coursename",
+        "entities": [
+          {
+            "start": 18,
+            "end": 24,
+            "value": "French",
+            "entity": "coursename"
+          }
+        ],
+        "text": "Can I know about  French?"
+      },
+      {
+        "intent": "buy_tv",
+        "text": "I want to buy a tv"
+      },
+      {
+        "intent": "buy_tv",
+        "text": "Do you have TV?"
+      },
+      {
+        "intent": "buy_tv",
+        "text": "Are there good TV?"
+      },
+      {
+        "intent": "buy_tv",
+        "text": "Can you recommed TV for me?"
+      },
+      {
+        "intent": "inform_size",
+        "entities": [
+          {
+            "start": 0,
+            "end": 6,
+            "value": "32inch",
+            "entity": "size"
+          }
+        ],
+        "text": "32inch"
+      },
+      {
+        "intent": "inform_size",
+        "entities": [
+          {
+            "start": 0,
+            "end": 7,
+            "value": "32 inch",
+            "entity": "size"
+          }
+        ],
+        "text": "32 inch"
+      },
+      {
+        "intent": "inform_size",
+        "entities": [
+          {
+            "start": 0,
+            "end": 6,
+            "value": "34inch",
+            "entity": "size"
+          }
+        ],
+        "text": "34inch"
+      },
+      {
+        "intent": "inform_size",
+        "entities": [
+          {
+            "start": 0,
+            "end": 7,
+            "value": "34 inch",
+            "entity": "size"
+          }
+        ],
+        "text": "34 inch"
+      },
+      {
+        "intent": "inform_size",
+        "entities": [
+          {
+            "start": 0,
+            "end": 6,
+            "value": "36inch",
+            "entity": "size"
+          }
+        ],
+        "text": "36inch"
+      },
+      {
+        "intent": "inform_size",
+        "entities": [
+          {
+            "start": 0,
+            "end": 7,
+            "value": "36 inch",
+            "entity": "size"
+          }
+        ],
+        "text": "36 inch please"
+      },
+      {
+        "intent": "inform_size",
+        "entities": [
+          {
+            "start": 0,
+            "end": 6,
+            "value": "40inch",
+            "entity": "size"
+          }
+        ],
+        "text": "40inch"
+      },
+      {
+        "intent": "inform_size",
+        "entities": [
+          {
+            "start": 0,
+            "end": 7,
+            "value": "40 inch",
+            "entity": "size"
+          }
+        ],
+        "text": "40 inch"
+      },
+      {
+        "intent": "inform_size",
+        "entities": [
+          {
+            "start": 0,
+            "end": 7,
+            "value": "36 inch",
+            "entity": "size"
+          }
+        ],
+        "text": "36 inch please"
+      },
+      {
+        "intent": "inform_size",
+        "entities": [
+          {
+            "start": 0,
+            "end": 6,
+            "value": "40inch",
+            "entity": "size"
+          }
+        ],
+        "text": "40inch"
+      },
+      {
+        "intent": "inform_size",
+        "entities": [
+          {
+            "start": 0,
+            "end": 7,
+            "value": "40 inch",
+            "entity": "size"
+          }
+        ],
+        "text": "40 inch please"
+      },
+      {
+        "intent": "inform_resolution",
+        "entities": [
+          {
+            "start": 9,
+            "end": 14,
+            "value": "1080p",
+            "entity": "resolution"
+          }
+        ],
+        "text": "I prefer 1080p"
+      },
+      {
+        "intent": "inform_resolution",
+        "entities": [
+          {
+            "start": 9,
+            "end": 13,
+            "value": "480p",
+            "entity": "resolution"
+          }
+        ],
+        "text": "I prefer 480p"
+      },
+      {
+        "intent": "inform_resolution",
+        "entities": [
+          {
+            "start": 9,
+            "end": 13,
+            "value": "960p",
+            "entity": "resolution"
+          }
+        ],
+        "text": "I prefer 960p"
+      },
+      {
+        "intent": "inform_resolution",
+        "entities": [
+          {
+            "start": 9,
+            "end": 11,
+            "value": "2k",
+            "entity": "resolution"
+          }
+        ],
+        "text": "I prefer 2k"
+      },
+      {
+        "intent": "inform_resolution",
+        "entities": [
+          {
+            "start": 9,
+            "end": 11,
+            "value": "4k",
+            "entity": "resolution"
+          }
+        ],
+        "text": "I prefer 4k"
+      },
+      {
+        "intent": "inform_resolution",
+        "entities": [
+          {
+            "start": 9,
+            "end": 11,
+            "value": "8k",
+            "entity": "resolution"
+          }
+        ],
+        "text": "I prefer 8k"
+      },
+      {
+        "intent": "inform_resolution",
+        "entities": [
+          {
+            "start": 0,
+            "end": 2,
+            "value": "2k",
+            "entity": "resolution"
+          }
+        ],
+        "text": "2k"
+      },
+      {
+        "intent": "inform_resolution",
+        "entities": [
+          {
+            "start": 0,
+            "end": 2,
+            "value": "4k",
+            "entity": "resolution"
+          }
+        ],
+        "text": "4k"
+      },
+      {
+        "intent": "inform_resolution",
+        "entities": [
+          {
+            "start": 0,
+            "end": 2,
+            "value": "8k",
+            "entity": "resolution"
+          }
+        ],
+        "text": "8k"
+      },
+      {
+        "intent": "inform_brand",
+        "entities": [
+          {
+            "start": 9,
+            "end": 13,
+            "value": "SONY",
+            "entity": "brandname"
+          }
+        ],
+        "text": "I prefer SONY"
+      },
+      {
+        "intent": "inform_brand",
+        "entities": [
+          {
+            "start": 7,
+            "end": 13,
+            "value": "HUAWEI",
+            "entity": "brandname"
+          }
+        ],
+        "text": "I like HUAWEI"
+      },
+      {
+        "intent": "inform_brand",
+        "entities": [
+          {
+            "start": 9,
+            "end": 11,
+            "value": "MI",
+            "entity": "brandname"
+          }
+        ],
+        "text": "I prefer MI"
+      },
+      {
+        "intent": "inform_brand",
+        "entities": [
+          {
+            "start": 9,
+            "end": 12,
+            "value": "TCL",
+            "entity": "brandname"
+          }
+        ],
+        "text": "I prefer TCL"
+      },
+      {
+        "intent": "inform_brand",
+        "entities": [
+          {
+            "start": 9,
+            "end": 16,
+            "value": "Hisense",
+            "entity": "brandname"
+          }
+        ],
+        "text": "I prefer Hisense"
+      },
+      {
+        "intent": "inform_brand",
+        "entities": [
+          {
+            "start": 9,
+            "end": 17,
+            "value": "Skyworth",
+            "entity": "brandname"
+          }
+        ],
+        "text": "I prefer Skyworth"
+      }
+    ],
+    "regex_features": [],
+    "lookup_tables": [],
+    "entity_synonyms": []
+  }
+}
